@@ -1,0 +1,14 @@
+data/results_cells_*
+
+geodata/DEM_Copernicus/*
+
+geodata/DWD_RR_Stationen/10min_RR.*
+geodata/DWD_RR_Stationen/10min_RR_SN.*
+geodata/DWD_RR_Stationen/zehn_min_rr_Beschreibung_Stationen*
+geodata/Terraincolors.qlr
+geodata/Map_template.qpt
+
+images/*
+
+code/__pycache__/*
+code/x.py
