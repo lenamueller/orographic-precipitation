@@ -1,12 +1,11 @@
 data/results_cells_*
 
-geodata/DEM_Copernicus/*
-
-geodata/DWD_RR_Stationen/10min_RR.*
-geodata/DWD_RR_Stationen/10min_RR_SN.*
-geodata/DWD_RR_Stationen/zehn_min_rr_Beschreibung_Stationen*
-geodata/Terraincolors.qlr
-geodata/Map_template.qpt
+data/DEM_Copernicus/*
+data/DWD_RR_Stationen/10min_RR.*
+data/DWD_RR_Stationen/10min_RR_SN.*
+data/DWD_RR_Stationen/zehn_min_rr_Beschreibung_Stationen*
+data/Terraincolors.qlr
+data/Map_template.qpt
 
 images/*
 
