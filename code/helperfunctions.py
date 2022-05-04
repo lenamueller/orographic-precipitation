@@ -76,6 +76,30 @@ def calculate_euclidean_distance(my_tracks, i):
     return total
 
 
+def get_color_normed(inten):
+    """define marker colors"""
+    if 0<inten<=0.25:
+        c = "navy"
+    if 0.25<inten<=0.5:
+        c = "royalblue"
+    if 0.5<inten<=0.75:
+        c = "deepskyblue"
+    if 0.75<inten<1:
+        c = "lightskyblue"
+    if inten == 1:
+        c = "green"
+    if 1<inten<=1.25:
+        c= "orange"
+    if 1.25<inten<= 1.5:
+        c = "darkorange"
+    if 1.5<inten<=1.75:
+        c = "lightcoral"
+    if 1.75<inten<=2:
+        c = "red"
+    if 2<inten:
+        c = "darkred"
+    return c
+
 def get_color(inten):
     """define marker colors"""
     if 0<inten<=10:
