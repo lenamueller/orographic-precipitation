@@ -12,8 +12,8 @@ class StateMachine:
     def __init__(self, trigger_level: int):
         self.trigger_level = trigger_level
         self.counter = 0
-        self.result_list = []
-        self.accumulate_list = []
+        self.result_list: list[list[float]] = []
+        self.accumulate_list: list[float] = []
         self.state = States.NOT_READY
         
     def __not_ready_transition(self, pr):
@@ -66,11 +66,15 @@ class StateMachine:
                 self.__finish_transition(pr)
 
 
-def find_special_events(precipitation: list[float], trigger_level: int = 72) -> list[list[float]]:
+def find_precipitation_events(precipitation: list[float], trigger_level: int = 72) -> list[list[float]]:
+    # ! return empty list for empty input list
+    if precipitation == []:
+        return []
+    # ! raise error if trigger level is one
     if trigger_level < 2:
         raise ValueError("Trigger level must be larger than 2")
-    
-    if type(precipitation) != list[float]:
+    # ! raise error if precipitation input list is not of type float or int
+    if type(precipitation[0]) not in (float, int):
         raise TypeError("Input list is not of type float.")
     
     state_machine = StateMachine(trigger_level)
@@ -78,8 +82,3 @@ def find_special_events(precipitation: list[float], trigger_level: int = 72) -> 
         state_machine.feed(p)
         
     return state_machine.result_list
-
-
-# example = [0,0,0,1,2,3,0,0,2,0,0,0,0]
-# example = [0,1,0]
-# print(find_special_events(example, trigger_level=1))
