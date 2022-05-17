@@ -1,6 +1,5 @@
 from enum import Enum
-from itertools import accumulate
-
+import sys
 
 class States(Enum):
     READY = 1
@@ -44,6 +43,7 @@ class StateMachine:
     def __finish_transition(self, pr):
         if pr == 0: # bleibt im finishing
             self.counter += 1
+            print(self.counter)
             if self.counter >= self.trigger_level:
                 self.result_list.append(self.accumulate_list)
                 self.accumulate_list = []
@@ -67,6 +67,12 @@ class StateMachine:
 
 
 def find_special_events(precipitation: list[float], trigger_level: int = 72) -> list[list[float]]:
+    if trigger_level < 2:
+        raise ValueError("Trigger level must be larger than 2")
+    
+    if type(precipitation) != list[float]:
+        raise TypeError("Input list is not of type float.")
+    
     state_machine = StateMachine(trigger_level)
     for p in precipitation:
         state_machine.feed(p)
@@ -74,5 +80,6 @@ def find_special_events(precipitation: list[float], trigger_level: int = 72) -> 
     return state_machine.result_list
 
 
-example = [1,2,3,0,0,2,0,0,0,0]
-# print(find_special_events(example, trigger_level=4))
+# example = [0,0,0,1,2,3,0,0,2,0,0,0,0]
+# example = [0,1,0]
+# print(find_special_events(example, trigger_level=1))
