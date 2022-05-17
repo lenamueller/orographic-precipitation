@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 from netCDF4 import Dataset
 
-from helperfunctions import windrichtung, read_track_list, i_j_indices_to_coord, get_color_normed, calculate_euclidean_distance, get_color
+from code.celltracks.helperfunctions import windrichtung, read_track_list, i_j_indices_to_coord, get_color_normed, calculate_euclidean_distance, get_color
 
 
 # read radolan coorinates. lon: i_index_cell bzw. i_cell_center, lat: j_index_cell bzw. j_cell_center
