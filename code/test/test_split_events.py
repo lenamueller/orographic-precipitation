@@ -1,4 +1,9 @@
 import pytest 
+import sys, os
+
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
 
 from split_events import find_precipitation_events
 
