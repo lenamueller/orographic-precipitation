@@ -11,3 +11,4 @@ metdata/celltracks/*
 metdata/DWD_RR_data
 metdata/opendata.dwd.de/*
 
+code/test/__pycache__/test_rolling_window.cpython-310-pytest-7.1.2.pyc

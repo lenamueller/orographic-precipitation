@@ -6,47 +6,58 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from split_events import find_precipitation_events
-from code.read_station import read_station
-from rolling_window import rolling_window_multiple_events
+from read_station import read_station
+from rolling_window import get_max_pr_sum
+from read_owk import read_owk
 
-# configure list of stations
-stations = [633]
 
-stations_z1 = [633]
+# configure list of stations and zones
+stations = [633, 721]
+stations_z1 = [633, 721]
 stations_z2 = []
 stations_z3 = []
 
+# create empty dict for precipitation sums of corresponding window size
 z1:dict = {1:[],2:[],3:[],6:[],12:[],18:[],36:[]}
 z2:dict = {1:[],2:[],3:[],6:[],12:[],18:[],36:[]}
 z3:dict = {1:[],2:[],3:[],6:[],12:[],18:[],36:[]}
 
-data: dict = dict.fromkeys(stations, [])
-events_df = pd.DataFrame(columns=["id", "duration", ""])
-
+# iterate through stations
 for st in stations:
+    # counter for events which match the synoptic situation
+    c = 0
     
     # read data and create data frame
     df_st = read_station(st)
+    
+    # get precipitation and datetime list from data frame and extract independent storms and its date and time
+    events, events_dates = find_precipitation_events(df_st["RWS_10"].tolist(), df_st["MESS_DATUM"].tolist())
+    
+    # read OWK data and create a datetime list of selected synoptic situations
+    owk_list: list[datetime.datetime] = []
 
-    # get precipitation list from data frame
-    precipitation = df_st["RWS_10"].tolist()
+    # keys are number of time steps which are the duration if multiplied by 10 min
+    maxval_dict: dict = {1:[],2:[],3:[],6:[],12:[],18:[],36:[]}
+    for e,d in zip(events, events_dates):
+        date_begin = d[0]
+        date_end = d[-1]
+        if (date_begin not in owk_list) and (date_end not in owk_list):
+            c += 1
+            # calculate max precipitation sum for each window size
+            maxval_dict_station = get_max_pr_sum(e,maxval_dict)
+            
+            # add station intensities to zone intensities
+            if st in stations_z1:
+                for ws in z1.keys():
+                    z1[ws].extend(maxval_dict_station[ws])
+            if st in stations_z2:
+                for ws in z1.keys():
+                    z2[ws].extend(maxval_dict_station[ws])
+            if st in stations_z3:
+                for ws in z1.keys():
+                    z3[ws].extend(maxval_dict_station[ws])
     
-    # calculate independent storms
-    events = find_precipitation_events(precipitation)
-    
-    # calculate max precipitation sum for each window size
-    maxintensities_per_ws = rolling_window_multiple_events(events)
-    
-    # add station intensities to zone intensities
-    if st in stations_z1:
-        for ws in z1.keys():
-            z1[ws].extend(maxintensities_per_ws[ws])
-    if st in stations_z2:
-        for ws in z1.keys():
-            z2[ws].extend(maxintensities_per_ws[ws])
-    if st in stations_z3:
-        for ws in z1.keys():
-            z3[ws].extend(maxintensities_per_ws[ws])
+    print(f"station {st} -  total number of events: {len(events)} - considered number of events: {c}")
 
 
 sys.exit()

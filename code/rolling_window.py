@@ -10,6 +10,7 @@ def get_max_pr_sum(event:list[float], maxval_dict: dict):
                 if val > maxval:
                     maxval = val
             maxval_dict[ws].append(round(maxval,3))
+    return maxval_dict
 
 def rolling_window_multiple_events(events:list[list[float]])->dict:
     # keys are number of time steps which are the duration if multiplied by 10 min
