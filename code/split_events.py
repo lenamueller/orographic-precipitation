@@ -43,7 +43,7 @@ class StateMachine:
     def __finish_transition(self, pr):
         if pr == 0: # bleibt im finishing
             self.counter += 1
-            print(self.counter)
+            # print(self.counter)
             if self.counter >= self.trigger_level:
                 self.result_list.append(self.accumulate_list)
                 self.accumulate_list = []
@@ -66,7 +66,7 @@ class StateMachine:
                 self.__finish_transition(pr)
 
 
-def find_precipitation_events(precipitation: list[float], trigger_level: int = 72) -> list[list[float]]:
+def find_precipitation_events(precipitation: list[float], trigger_level: int = 36) -> list[list[float]]:
     # ! return empty list for empty input list
     if precipitation == []:
         return []
