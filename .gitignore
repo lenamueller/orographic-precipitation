@@ -4,6 +4,7 @@ code/test/__pycache__/*
 code/__pycache__/*
 
 geodata/DEM_Copernicus/*
+geodata/Map_template_EN.qpt
 
 images/*
 
@@ -12,3 +13,5 @@ metdata/DWD_RR_data
 metdata/opendata.dwd.de/*
 metdata/intensities/*
 
+venv/*
+geodata/Map_Uebersicht.png
