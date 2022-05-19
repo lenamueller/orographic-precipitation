@@ -1,5 +1,6 @@
-def get_max_pr_sum(event:list[float], maxval_dict: dict):
-    for ws in maxval_dict.keys():
+def rolling_intensity(event:list[float], ws_list:list[int] = [1,2,3,6,12,18,36])->dict:
+    max_pr_sum: dict = {ws: [] for ws in ws_list}
+    for ws in ws_list:
         # list must be at least as long as the window size
         if ws <= len(event): 
             maxval: float = 0.0
@@ -9,12 +10,5 @@ def get_max_pr_sum(event:list[float], maxval_dict: dict):
                 val = sum(window)
                 if val > maxval:
                     maxval = val
-            maxval_dict[ws].append(round(maxval,3))
-    return maxval_dict
-
-def rolling_window_multiple_events(events:list[list[float]])->dict:
-    # keys are number of time steps which are the duration if multiplied by 10 min
-    max_pr_sum: dict = {1:[],2:[],3:[],6:[],12:[],18:[],36:[]}
-    for e in events:
-        get_max_pr_sum(e,max_pr_sum)    
+                    max_pr_sum[ws].append(round(maxval,3))
     return max_pr_sum
