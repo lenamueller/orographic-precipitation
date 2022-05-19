@@ -1,6 +1,6 @@
 .vscode
 
-code/test/__pycache__/test_split_events.cpython-310-pytest-7.1.2.pyc
+code/test/__pycache__/*
 code/__pycache__/*
 
 geodata/DEM_Copernicus/*
@@ -10,5 +10,5 @@ images/*
 metdata/celltracks/*
 metdata/DWD_RR_data
 metdata/opendata.dwd.de/*
+metdata/intensities/*
 
-code/test/__pycache__/test_rolling_window.cpython-310-pytest-7.1.2.pyc
