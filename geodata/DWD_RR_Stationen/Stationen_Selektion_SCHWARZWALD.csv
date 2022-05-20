@@ -1,0 +1,44 @@
+id,datum_von,datum_bis,hoehe,lat,lon,name,bundesland,height
+257,20020909,20220503,240,"48.727","8.2457",Baden-Baden-Geroldsau,Baden-W�rttemberg,Z2
+259,20031101,20220503,275,"47.8064","7.6387",M�llheim,Baden-W�rttemberg,Z2
+268,19960719,19961231,622,"48.5293","8.2727",Baiersbronn-Obertal,Baden-W�rttemberg,Z3
+269,20060523,20220502,599,"48.5116","8.3176",Baiersbronn-Mitteltal,Baden-W�rttemberg,Z3
+684,20050609,20220502,1000,"47.9385","8.0761",Breitnau,Baden-W�rttemberg,Z3
+757,20030326,20220502,445,"47.9625","7.9983",Buchenbach,Baden-W�rttemberg,Z3
+998,19961002,20011031,696,"48.7968","8.4921",Dobel,Baden-W�rttemberg,Z3
+1089,20060606,20220502,197,"48.5017","7.9943",Durbach-Ebersweier,Baden-W�rttemberg,Z1
+1176,20041028,20220502,976,"47.9634","8.2693",Eisenbach,Baden-W�rttemberg,Z3
+1214,20040401,20220502,431,"48.2012","8.1088",Elzach-Fisnacht,Baden-W�rttemberg,Z2
+1224,20021030,20220502,201,"48.1378","7.8351",Emmendingen-Mundingen,Baden-W�rttemberg,Z2
+1315,20061001,20101108,118,"48.9246","8.3824",Ettlingen-Ettlingenweie,Baden-W�rttemberg,Z1
+1346,19951027,20220502,1490,"47.8749","8.0038",Feldberg/Schwarzwald,Baden-W�rttemberg,Z3
+1443,19940427,20220502,237,"48.0232","7.8343",Freiburg,Baden-W�rttemberg,Z2
+1468,19910102,20220502,797,"48.4538","8.409",Freudenstadt,Baden-W�rttemberg,Z3
+1602,20031101,20220503,177,"48.433","7.993",Ohlsbach,Baden-W�rttemberg,Z1
+2050,20060904,20220502,218,"48.2766","8.0841",Haslach im Kinzigtal,Baden-W�rttemberg,Z2
+2388,20050204,20220502,193,"48.0419","7.6322",Ihringen,Baden-W�rttemberg,Z1
+2522,19960725,20081031,112,"49.0382","8.3641",Karlsruhe,Baden-W�rttemberg,Z1
+2546,20060101,20220502,141,"48.5576","7.88",Kehl-Odelshofen,Baden-W�rttemberg,Z1
+2812,19960829,20220502,156,"48.3647","7.828",Lahr,Baden-W�rttemberg,Z1
+2953,20070401,20220502,854,"47.8597","8.2308",Lenzkirch-Ruhb�hl,Baden-W�rttemberg,Z3
+3690,20061001,20220502,372,"48.3862","8.1426",Oberharmersbach,Baden-W�rttemberg,Z2
+3802,20061001,20161026,315,"48.4765","8.1624",Oppenau,Baden-W�rttemberg,Z2
+4169,20021023,20220503,131,"48.6703","7.9939",Rheinau-Memprechtshofen,Baden-W�rttemberg,Z1
+4175,20030410,20220502,283,"47.559","7.7721",Rheinfelden,Baden-W�rttemberg,Z2
+4177,20081101,20220502,116,"48.9726","8.3301",Rheinstetten,Baden-W�rttemberg,Z1
+4211,20060915,20220502,493,"48.4245","8.3303","Rippoldsau, Bad",Baden-W�rttemberg,Z3
+4310,20020523,20220502,105,"49.1609","8.3009",R�lzheim,Rheinland-Pfalz,Z1
+4315,20050901,20220502,914,"48.5615","8.2228",Baiersbronn-Ruhestein,Baden-W�rttemberg,Z3
+4351,20061001,20220502,295,"47.5582","7.9773","S�ckingen, Bad/ Rhein",Baden-W�rttemberg,Z2
+4477,20050531,20050930,993,"47.8208","8.186",Schluchsee,Baden-W�rttemberg,Z3
+4655,20061001,20111130,804,"48.5975","8.4268",Seewald-Besenfeld,Baden-W�rttemberg,Z3
+4710,20070322,20220502,718,"48.6191","8.5247",Simmersfeld,Baden-W�rttemberg,Z3
+4712,20060607,20220502,428,"48.0821","8.0919",Simonswald-Obersimonswa,Baden-W�rttemberg,Z2
+5047,20060915,20101213,870,"47.9394","8.1933",Titisee-Neustadt-Langen,Baden-W�rttemberg,Z3
+5049,19981107,20050228,846,"47.8991","8.146",Titisee-Neustadt-Titise,Baden-W�rttemberg,Z3
+5059,20041028,20220502,781,"47.7279","7.9988",Todtmoos,Baden-W�rttemberg,Z3
+5453,20050308,20220502,174,"48.188","7.6976",Weisweil-Waldeckhof,Baden-W�rttemberg,Z1
+5664,20030325,20220502,296,"48.2953","8.2391",Wolfach,Baden-W�rttemberg,Z2
+5688,20181101,20220503,880,"47.7003","8.1057",Dachsberg-Wolpadingen,Baden-W�rttemberg,Z3
+5840,20060912,20220502,600,"48.6671","8.47",Enzkl�sterle,Baden-W�rttemberg,Z3
+7322,20050901,20220502,699,"47.766","7.7214",Malsburg-Marzell,Baden-W�rttemberg,Z3

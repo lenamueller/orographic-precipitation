@@ -1,0 +1,24 @@
+id,datum_von,datum_bis,hoehe,lat,lon,name,bundesland,height
+378,20050314,20220502,136,"51.6843","10.1077",Berka,Niedersachsen,Z1
+505,20021025,20060702,332,"51.4268","10.0932",Bischhagen,Th�ringen,Z2
+656,19910815,20220502,607,"51.7234","10.6021",Braunlage,Niedersachsen,Z3
+722,19971023,20210930,1135,"51.7986","10.6183",Brocken,Sachsen-Anhalt,Z3
+863,20070912,20120404,585,"51.7904","10.347",Clausthal-Zellerfeld,Niedersachsen,Z3
+974,20060712,20220502,440,"51.5307","11.0457",S�dharz-Dietersdorf,Sachsen-Anhalt,Z3
+1095,20060807,20110724,192,"51.6001","10.1105",Krebeck-Renshausen,Niedersachsen,Z2
+1297,20040407,20220502,156,"51.2041","10.0138",Eschwege,Hessen,Z1
+1691,19931110,20220502,167,"51.5002","9.9507",G�ttingen,Niedersachsen,Z1
+2044,19910115,20220502,404,"51.652","11.1366",Harzgerode,Sachsen-Anhalt,Z3
+2174,20101101,20220502,238,"51.6255","10.3695",Herzberg,Niedersachsen,Z2
+2175,20061018,20220502,340,"51.689","10.357",Herzberg-Lonau,Niedersachsen,Z3
+2890,20060901,20220502,305,"51.5957","10.463","Lauterberg,Bad-Bartolfe",Niedersachsen,Z2
+2925,19911104,20220502,356,"51.3932","10.3123",Leinefelde,Th�ringen,Z2
+3304,20070401,20220502,294,"51.2327","10.7694",Freienbessingen,Th�ringen,Z2
+3650,20041111,20220502,212,"51.763","10.0416",Northeim-Imbshausen,Niedersachsen,Z2
+4132,20020527,20220502,115,"51.4841","9.6121",Reinhardshagen-Vaake,Hessen,Z1
+4135,20070509,20220502,336,"51.4248","10.1898",Reinholterode,Th�ringen,Z2
+4445,19911113,20220502,609,"51.7658","10.6533",Wernigerode-Schierke,Sachsen-Anhalt,Z3
+4748,20040622,20101231,221,"51.352","10.9059",Sondershausen,Th�ringen,Z2
+4878,20041005,20220503,504,"51.6646","10.8811",Oberharz am Brocken-Sti,Sachsen-Anhalt,Z3
+5484,20021017,20220502,240,"51.5835","10.709",Ellrich-Werna,Th�ringen,Z2
+6305,20041201,20220503,193,"51.2061","10.4978",M�hlhausen/Th�ringen-G�,Th�ringen,Z1
