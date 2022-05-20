@@ -1,15 +1,32 @@
+from datetime import datetime
 import pickle
+import sys
 import numpy as np
 
 from read_station import read_station
 from read_owk import read_owk
-from read_stationids import read_stationids
+from read_stationids import read_stations_erzgebirge
 from split_events import find_precipitation_events
 from rolling_window import rolling_intensity
 
 
+my_config = "ERZ"
+
+if my_config == "ERZ":
+    path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion_Erzgebirge.csv'
+    owk_abbr = ["NWAZF", "NWZAF", "SWZZF"]
+
+if my_config == "HARZ":
+    path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion_Harz.csv'
+    owk_abbr = ["SWAZF", "SWZAF", "SWZZF"]
+
+if my_config == "THUE":
+    path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion_ThueringerWald.csv'
+    owk_abbr = ["SWAZF", "SWZAF", "SWZZF"]
+
+
 # read zone stations
-stations_z1, stations_z2, stations_z3, stations_all = read_stationids()
+stations_z1, stations_z2, stations_z3, stations_all = read_stations_erzgebirge(path_stations)
 
 z1:dict = {}
 z2:dict = {}
@@ -17,7 +34,10 @@ z3:dict = {}
 
 # read OWK data and create a datetime list of selected synoptic situations
 owk = read_owk()
-owk_all = owk["NWAZF"]+ owk["NWZAF"] + owk["NWZZF"]
+owk_all = []
+for abbr in owk_abbr:
+    owk_all.extend(owk[abbr])
+    
 print("Number of OWK days: ", len(owk_all))
     
 # iterate through stations
@@ -62,11 +82,11 @@ for st in stations_all:
         print(f"station {st} -  events (total): {len(events)} - events (OWK): {c} - NOT USED")
 
 # save zone dictionaries to files
-with open('metdata/intensities_z1_st.pkl', 'wb') as f:
+with open(f'metdata/intensities_{my_config}_z1.pkl', 'wb') as f:
     pickle.dump(z1, f)
-with open('metdata/intensities_z2_st.pkl', 'wb') as f:
+with open(f'metdata/intensities_{my_config}_z2.pkl', 'wb') as f:
     pickle.dump(z2, f)
-with open('metdata/intensities_z3_st.pkl', 'wb') as f:
+with open(f'metdata/intensities_{my_config}_z3.pkl', 'wb') as f:
     pickle.dump(z3, f)
     
 print("Done")

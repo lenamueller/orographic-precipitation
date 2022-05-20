@@ -1,8 +1,7 @@
 import pandas as pd
 
 
-def read_stationids():
-    path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion.csv'
+def read_stations_erzgebirge(path_stations):
     stations = pd.read_csv(path_stations, delimiter=',')
     ids = stations["id"].tolist() #int
     zones = stations["height"].tolist() #str

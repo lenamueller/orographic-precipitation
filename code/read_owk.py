@@ -10,7 +10,9 @@ def read_owk():
     owk_df['datetime'] = pd.to_datetime(owk_df['datetime'], format='%Y%m%d')
     
     # create subset which matches synoptic situations
-    owk = {"NWAZF":[], "NWZAF":[], "NWZZF":[], "NOAZF":[], "NOZAF":[], "NOZZF":[]}
+    owk = {"NWAZF":[], "NWZAF":[], "NWZZF":[], # Erzgebirge
+           "SWAZF":[], "SWZAF":[], "SWZZF":[], # Thüringer Wald, Harz
+           }
     for index, row in owk_df.iterrows():
         owk_i = row["owk_abbreviation"]
         owk_datetime = row["datetime"]
