@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def read_stations_erzgebirge(path_stations):
+def read_stations(path_stations):
     stations = pd.read_csv(path_stations, delimiter=',')
     ids = stations["id"].tolist() #int
     zones = stations["height"].tolist() #str
