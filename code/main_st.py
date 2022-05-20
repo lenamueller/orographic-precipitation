@@ -5,28 +5,33 @@ import numpy as np
 
 from read_station import read_station
 from read_owk import read_owk
-from read_stationids import read_stations_erzgebirge
+from read_stationids import read_stations
 from split_events import find_precipitation_events
 from rolling_window import rolling_intensity
+from enums import CONFIG
 
 
-my_config = "ERZ"
+my_config = CONFIG.SCHWARZWALD.name
 
 if my_config == "ERZ":
-    path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion_Erzgebirge.csv'
-    owk_abbr = ["NWAZF", "NWZAF", "SWZZF"]
+    path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion_ERZGEBIRGE.csv'
+    owk_abbr = ["NWAZF", "NWZAF", "NWZZF"] # 2469 days
 
 if my_config == "HARZ":
-    path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion_Harz.csv'
-    owk_abbr = ["SWAZF", "SWZAF", "SWZZF"]
+    path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion_HARZ.csv'
+    owk_abbr = ["SWAZF", "SWZAF", "SWZZF"] # 533 days
 
-if my_config == "THUE":
-    path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion_ThueringerWald.csv'
-    owk_abbr = ["SWAZF", "SWZAF", "SWZZF"]
+# if my_config == "THUERINGERWALD":
+#     path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion_ThueringerWald.csv'
+#     owk_abbr = ["SWAZF", "SWZAF", "SWZZF"]
+
+if my_config == "SCHWARZWALD":
+    path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion_SCHWARZWALD.csv'
+    owk_abbr = ["NWAZF", "NWZAF", "NWZZF"]
 
 
 # read zone stations
-stations_z1, stations_z2, stations_z3, stations_all = read_stations_erzgebirge(path_stations)
+stations_z1, stations_z2, stations_z3, stations_all = read_stations(path_stations)
 
 z1:dict = {}
 z2:dict = {}
