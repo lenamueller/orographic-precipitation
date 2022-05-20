@@ -82,11 +82,11 @@ for st in stations_all:
         print(f"station {st} -  events (total): {len(events)} - events (OWK): {c} - NOT USED")
 
 # save zone dictionaries to files
-with open(f'metdata/intensities_{my_config}_z1.pkl', 'wb') as f:
+with open(f'metdata/intensities/intensities_{my_config}_z1.pkl', 'wb') as f:
     pickle.dump(z1, f)
-with open(f'metdata/intensities_{my_config}_z2.pkl', 'wb') as f:
+with open(f'metdata/intensities/intensities_{my_config}_z2.pkl', 'wb') as f:
     pickle.dump(z2, f)
-with open(f'metdata/intensities_{my_config}_z3.pkl', 'wb') as f:
+with open(f'metdata/intensities/intensities_{my_config}_z3.pkl', 'wb') as f:
     pickle.dump(z3, f)
     
 print("Done")
