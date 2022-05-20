@@ -1,15 +1,17 @@
-from pickletools import optimize
 from scipy import stats 
 import matplotlib.pyplot as plt
 import numpy as np
 import proplot as pplt
 import sys
+import math
 
 from read_intensities import read_intensities_st
 
 
+region = "ERZ"
+
 # read zone data
-z1, z2, z3 = read_intensities_st()
+z1, z2, z3 = read_intensities_st(region)
 
 print("z1 number stations:", len(z1.keys()), z1.keys())
 print("z2 number stations:", len(z2.keys()), z2.keys())
@@ -40,7 +42,8 @@ for st, i in zip(z2.keys(),np.arange(0,7,1)):
             para_z2["shape"][i].append(shape)
             # print(f"\nPARAMETER station {st} Z2: scale {scale}, shape {shape}")
         else:
-            print(f"\nPARAMETER station {st} Z2 can not be calculated because list is empty.")
+            # print(f"\nPARAMETER station {st} Z2 can not be calculated because list is empty.")
+            continue
             
 for st, i in zip(z3.keys(),np.arange(0,7,1)):
     intensities = z3[st]
@@ -51,47 +54,52 @@ for st, i in zip(z3.keys(),np.arange(0,7,1)):
             para_z3["shape"][i].append(shape)
             # print(f"\nPARAMETER station {st} Z3: scale {scale}, shape {shape}")
         else:
-            print(f"\nPARAMETER station {st} Z3 can not be calculated because list is empty.")
+            # print(f"\nPARAMETER station {st} Z3 can not be calculated because list is empty.")
+            continue
 
+fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(10,4))
 
-fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(6,6))
-ax[0,0].scatter(para_z1["scale"][0], para_z1["shape"][0],s=5, c="b", label="10 min")
-ax[0,0].scatter(para_z2["scale"][0], para_z2["shape"][0],s=5, c="g", label="10 min")
-ax[0,0].scatter(para_z3["scale"][0], para_z3["shape"][0],s=5, c="r", label="10 min")
+ax[0].scatter(para_z1["scale"][0], para_z1["shape"][0],s=5, marker = "^", c="b", alpha = 0.8, label="Z1 10 min")
+ax[0].scatter(para_z1["scale"][2], para_z1["shape"][2],s=5, marker = "o", c="b", alpha = 0.8, label="Z1 30 min")
+ax[0].scatter(para_z1["scale"][3], para_z1["shape"][3],s=5, marker = "o", facecolor='none', edgecolor="b", alpha = 0.8, label="Z1 1 h")
+ax[0].scatter(para_z2["scale"][0], para_z2["shape"][0],s=5, marker = "^", c="g", alpha = 0.1, label="Z2 10 min")
+ax[0].scatter(para_z2["scale"][2], para_z2["shape"][2],s=5, marker = "o", c="g", alpha = 0.1, label="Z2 30 min")
+ax[0].scatter(para_z2["scale"][3], para_z2["shape"][3],s=5, marker = "o", facecolor='none', edgecolor="g", alpha = 0.1, label="Z2 1 h")
+ax[0].scatter(para_z3["scale"][0], para_z3["shape"][0],s=5, marker = "^", c="r", alpha = 0.1, label="Z3 10 min")
+ax[0].scatter(para_z3["scale"][2], para_z3["shape"][2],s=5, marker = "o", c="r", alpha = 0.1, label="Z3 30 min")
+ax[0].scatter(para_z3["scale"][3], para_z3["shape"][3],s=5, marker = "o", facecolor='none', edgecolor="r", alpha = 0.1, label="Z3 1 h")
 
-ax[1,0].scatter(para_z1["scale"][2], para_z1["shape"][2],s=5, c="b", label="30 min")
-ax[1,0].scatter(para_z2["scale"][2], para_z2["shape"][2],s=5, c="g", label="30 min")
-ax[1,0].scatter(para_z3["scale"][2], para_z3["shape"][2],s=5, c="r", label="30 min")
+ax[1].scatter(para_z1["scale"][0], para_z1["shape"][0],s=5, marker = "^", c="b", alpha = 0.1, label="Z1 10 min")
+ax[1].scatter(para_z1["scale"][2], para_z1["shape"][2],s=5, marker = "o", c="b", alpha = 0.1, label="Z1 30 min")
+ax[1].scatter(para_z1["scale"][3], para_z1["shape"][3],s=5, marker = "o", facecolor='none', edgecolor="b", alpha = 0.1, label="Z1 1 h")
+ax[1].scatter(para_z2["scale"][0], para_z2["shape"][0],s=5, marker = "^", c="g", alpha = 0.8, label="Z2 10 min")
+ax[1].scatter(para_z2["scale"][2], para_z2["shape"][2],s=5, marker = "o", c="g", alpha = 0.8, label="Z2 30 min")
+ax[1].scatter(para_z2["scale"][3], para_z2["shape"][3],s=5, marker = "o", facecolor='none', edgecolor="g", alpha = 0.8, label="Z2 1 h")
+ax[1].scatter(para_z3["scale"][0], para_z3["shape"][0],s=5, marker = "^", c="r", alpha = 0.1, label="Z3 10 min")
+ax[1].scatter(para_z3["scale"][2], para_z3["shape"][2],s=5, marker = "o", c="r", alpha = 0.1, label="Z3 30 min")
+ax[1].scatter(para_z3["scale"][3], para_z3["shape"][3],s=5, marker = "o", facecolor='none', edgecolor="r", alpha = 0.1, label="Z3 1 h")
 
-ax[0,1].scatter(para_z1["scale"][3], para_z1["shape"][3],s=5, c="b", label="1 h")
-ax[0,1].scatter(para_z2["scale"][3], para_z2["shape"][3],s=5, c="g", label="1 h")
-ax[0,1].scatter(para_z3["scale"][3], para_z3["shape"][3],s=5, c="r", label="1 h")
+ax[2].scatter(para_z1["scale"][0], para_z1["shape"][0],s=5, marker = "^", alpha = 0.1,c="b", label="Z1 10 min")
+ax[2].scatter(para_z1["scale"][2], para_z1["shape"][2],s=5, marker = "o", facecolor='none', alpha = 0.1,edgecolor="b", label="Z1 30 min")
+ax[2].scatter(para_z1["scale"][3], para_z1["shape"][3],s=5, marker = "s", alpha = 0.1,c="b", label="Z1 1 h")
+ax[2].scatter(para_z2["scale"][0], para_z2["shape"][0],s=5, marker = "^", alpha = 0.1,c="g", label="Z2 10 min")
+ax[2].scatter(para_z2["scale"][2], para_z2["shape"][2],s=5, marker = "o", facecolor='none', alpha = 0.1,edgecolor="g", label="Z2 30 min")
+ax[2].scatter(para_z2["scale"][3], para_z2["shape"][3],s=5, marker = "s", alpha = 0.1,c="g", label="Z2 1 h")
+ax[2].scatter(para_z3["scale"][0], para_z3["shape"][0],s=5, marker = "^", c="r", alpha = 0.8, label="Z3 10 min")
+ax[2].scatter(para_z3["scale"][2], para_z3["shape"][2],s=5, marker = "o", c="r", alpha = 0.8, label="Z3 30 min")
+ax[2].scatter(para_z3["scale"][3], para_z3["shape"][3],s=5, marker = "o", facecolor='none', edgecolor="r", alpha = 0.8, label="Z3 1 h")
 
-ax[1,1].scatter(para_z1["scale"][5], para_z1["shape"][5],s=5, c="b", label="3 h")
-ax[1,1].scatter(para_z2["scale"][5], para_z2["shape"][5],s=5, c="g", label="3 h")
-ax[1,1].scatter(para_z3["scale"][5], para_z3["shape"][5],s=5, c="r", label="3 h")
-
-
-# for ws,lab in zip(range(7),[10,20,30,60,120,180,360]):
-#     plt.scatter(para_z1["scale"][ws], para_z1["shape"][ws], c="b")
-# for ws,lab in zip(range(7),[10,20,30,60,120,180,360]):
-#     plt.scatter(para_z2["scale"][ws], para_z2["shape"][ws], c="g")
-# for ws,lab in zip(range(7),[10,20,30,60,120,180,360]):
-#     plt.scatter(para_z3["scale"][ws], para_z3["shape"][ws], c="r")
-
-# for i in (ax[0,0],ax[1,0],ax[0,1],ax[1,1]):
-#     ax.set_xlim([-2,10])
-#     ax.set_ylim([-1,2])
-#     ax.set_xlabel("scale")
-#     ax.set_ylabel("shape")
-#     plt.legend()
-ax[0,0].set_title("10 min")
-ax[1,0].set_title("30 min")
-ax[0,1].set_title("1 h")
-ax[1,1].set_title("3 h")
-plt.setp(ax, xlim=[-2,10], ylim=[0,2.5], xlabel="scale", ylabel="shape")
-    
-plt.savefig("images/Erzgebirge/Scatter.png")
+ax[0].set_title("Z1: 0 - 200 m AMSL")
+ax[1].set_title("Z2: 200 - 400 m AMSL")
+ax[2].set_title("Z3: 400 m AMSL <")
+ax[0].set_xlabel(r'scale $\lambda$')
+ax[0].set_ylabel(r'shape $\kappa$')
+plt.setp(ax, xlim=[0,7], ylim=[0.2,1.2])
+# plt.setp(ax, xlim=[0,15], ylim=[0,2])
+ax[0].legend()
+ax[1].legend()
+ax[2].legend()
+plt.savefig(f"images/Erzgebirge/Scatter_{region}_2.png", dpi=400, bbox_inches="tight")
 
 sys.exit()
 # plotting example
