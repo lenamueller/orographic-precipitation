@@ -1,59 +1,41 @@
-from datetime import datetime
 import pickle
-import sys
 import numpy as np
 
-from read_station import read_station
-from read_owk import read_owk
-from read_stationids import read_stations
+from read_files import read_station_ids, read_station_data, read_owk
 from split_events import find_precipitation_events
 from rolling_window import rolling_intensity
 from enums import CONFIG
 
 
-my_config = CONFIG.SCHWARZWALD.name
+my_config = CONFIG.ERZGEBIRGE.name
 
-if my_config == "ERZ":
-    path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion_ERZGEBIRGE.csv'
-    owk_abbr = ["NWAZF", "NWZAF", "NWZZF"] # 2469 days
+""" 
+ERZGEBIRGE: 82 stations, 1213 synoptic days
+SCHWARZWALD: 40 stations, 1213 synoptic days
+HARZ: 23 stations, 3149 synoptic days
+"""
 
-if my_config == "HARZ":
-    path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion_HARZ.csv'
-    owk_abbr = ["SWAZF", "SWZAF", "SWZZF"] # 533 days
+# read station IDs for each zone
+stations_z1, stations_z2, stations_z3, stations_all = read_station_ids(my_config)
+print("Number of stations:", len(stations_all))
 
-# if my_config == "THUERINGERWALD":
-#     path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion_ThueringerWald.csv'
-#     owk_abbr = ["SWAZF", "SWZAF", "SWZZF"]
-
-if my_config == "SCHWARZWALD":
-    path_stations = 'geodata/DWD_RR_Stationen/Stationen_Selektion_SCHWARZWALD.csv'
-    owk_abbr = ["NWAZF", "NWZAF", "NWZZF"]
-
-
-# read zone stations
-stations_z1, stations_z2, stations_z3, stations_all = read_stations(path_stations)
-
+# read OWK dates and create a datetime list of selected synoptic situations
+owk, owk_all = read_owk(my_config)
+print("Number of OWK days:", len(owk_all))
+    
+# create empty zone dictionary for intensity values
 z1:dict = {}
 z2:dict = {}
 z3:dict = {}
 
-# read OWK data and create a datetime list of selected synoptic situations
-owk = read_owk()
-owk_all = []
-for abbr in owk_abbr:
-    owk_all.extend(owk[abbr])
-    
-print("Number of OWK days: ", len(owk_all))
-    
-# iterate through stations
 for st in stations_all:
     st_list:list[list[float]] = [[],[],[],[],[],[],[]]
 
     # counter for events which match the synoptic situation
     c = 0
     
-    # read data and create data frame
-    df_st = read_station(st)
+    # read station data and create data frame
+    df_st = read_station_data(st)
     
     # extract independent storms and its datetime
     events, events_dates = find_precipitation_events(df_st["RWS_10"].tolist(), df_st["MESS_DATUM"].tolist())
