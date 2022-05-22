@@ -50,8 +50,10 @@ class StateMachine:
             self.counter += 1
             # print(self.counter)
             if self.counter >= self.trigger_level:
-                self.result_list.append(self.accumulate_list)
-                self.result_list_dates.append(self.accumulate_list_dates)
+                # independent storms below 30 min duration are ignored
+                if len(self.accumulate_list)>3:
+                    self.result_list.append(self.accumulate_list)
+                    self.result_list_dates.append(self.accumulate_list_dates)
                 self.accumulate_list = []
                 self.accumulate_list_dates = []
                 self.counter = 0
