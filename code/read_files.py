@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import collections
 
 
-def read_owk():
+def read_owk(my_config):
     # read file
     path_owk = '/home/lena/Documents/Master/Sem_2/FachvorträgeHydro/orographic_precipitation/metdata/owk/wlkvorhersage.txt'
     owk_df = pd.read_csv(path_owk, sep=',', names=["datetime", "owk_number", "owk_abbreviation"], header=None)
@@ -13,17 +13,25 @@ def read_owk():
     owk_df['datetime'] = pd.to_datetime(owk_df['datetime'], format='%Y%m%d')
     
     # create subset which matches synoptic situations
-    owk = {"NWAZF":[], "NWZAF":[], "NWZZF":[], # Erzgebirge
-           "SWAZF":[], "SWZAF":[], "SWZZF":[], # Thüringer Wald, Harz
-           "XXZZF":[], "XXZAF":[], "XXAZF":[] # alle
-           }
+    # dict with dates according to abbreviation
+    if (my_config == "ERZGEBIRGE") or (my_config == "SCHWARZWALD"):
+        owk = {"NWAZF":[], "NWZAF":[], "NWZZF":[], "XXZZF":[], "XXZAF":[], "XXAZF":[]}
+
+    if (my_config == "HARZ") or (my_config == "THUERINGERWALD"):
+        owk = {"SWAZF":[], "SWZAF":[], "SWZZF":[], "XXZZF":[], "XXZAF":[], "XXAZF":[]}    
+    
     for index, row in owk_df.iterrows():
         owk_i = row["owk_abbreviation"]
         owk_datetime = row["datetime"]
         if owk_i in owk.keys():
             owk[owk_i].append(owk_datetime.date())
-
-    return owk
+    
+    # all dates merged
+    owk_all = []
+    for abbr in owk.keys():
+        owk_all.extend(owk[abbr])
+    
+    return owk, owk_all
 
 def owk_stats():
     path_owk = '/home/lena/Documents/Master/Sem_2/FachvorträgeHydro/orographic_precipitation/metdata/owk/wlkvorhersage.txt'
@@ -39,7 +47,8 @@ def owk_stats():
     plt.savefig("images/owk_hist.png", dpi=300, bbox_inches="tight")
     
     
-def read_station_ids(path_stations):
+def read_station_ids(my_config):
+    path_stations = f'geodata/DWD_RR_Stationen/Stationen_Selektion_{my_config}.csv'
     stations = pd.read_csv(path_stations, delimiter=',')
     ids = stations["id"].tolist() #int
     zones = stations["height"].tolist() #str
@@ -72,7 +81,7 @@ def read_station_data(station_id:int)->pd.DataFrame:
 
     # read files into df
     number_files = len(data_files_st)
-    print("number files", number_files, "for station", station_id)
+    # print("number files", number_files, "for station", station_id)
     
     if number_files == 0:
         print("NO FILES FOUND FOR STATION NO.", station_id)
