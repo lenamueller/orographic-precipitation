@@ -24,13 +24,13 @@ def weibull_fit(intensites:list[float], info):
     _, ax = plt.subplots(nrows=1, ncols=1, figsize=(6,6))
     # calculate histogram values
     n, bins, _ = ax.hist(intensites, bins=np.arange(0,20,0.25), density=True, cumulative=True, histtype='stepfilled', alpha=0.2)
-    # modifiy histogram range (min. 2 mm precipitation)
-    xdata = bins[8:-1]
-    ydata = n[8:]
+    # modifiy histogram range (min. 4 mm precipitation)
+    xdata = bins[20:-1]
+    ydata = n[20:]
     # fit function
     try:
         popt, _ = curve_fit(func, xdata, ydata)
-        print("Optimal values for the parameters (popt)", popt, info, len(intensites))
+        print("Optimal values for the parameters (popt)", popt, "(station/ws)", info, "number of values", len(intensites))
         # plot
         plt.plot(xdata, ydata, 'b-', label='data') # data as line
         plt.plot(xdata, func(xdata, *popt), 'r-', label=f'fit: scale={round(popt[0],3)}, shape={round(popt[1],3)}') # fitted line
@@ -59,6 +59,7 @@ def calc_params(datadict):
 z1_params = calc_params(z1)
 z2_params = calc_params(z2)
 z3_params = calc_params(z3)
+
 print("z1_params", z1_params)
 print("z2_params", z2_params)
 print("z3_params", z3_params)
