@@ -5,7 +5,6 @@ id,datum_von,datum_bis,hoehe,lat,lon,name,bundesland,height
 269,20060523,20220502,599,"48.5116","8.3176",Baiersbronn-Mitteltal,Baden-W�rttemberg,Z3
 684,20050609,20220502,1000,"47.9385","8.0761",Breitnau,Baden-W�rttemberg,Z3
 757,20030326,20220502,445,"47.9625","7.9983",Buchenbach,Baden-W�rttemberg,Z3
-998,19961002,20011031,696,"48.7968","8.4921",Dobel,Baden-W�rttemberg,Z3
 1089,20060606,20220502,197,"48.5017","7.9943",Durbach-Ebersweier,Baden-W�rttemberg,Z1
 1176,20041028,20220502,976,"47.9634","8.2693",Eisenbach,Baden-W�rttemberg,Z3
 1214,20040401,20220502,431,"48.2012","8.1088",Elzach-Fisnacht,Baden-W�rttemberg,Z2
@@ -21,7 +20,6 @@ id,datum_von,datum_bis,hoehe,lat,lon,name,bundesland,height
 2546,20060101,20220502,141,"48.5576","7.88",Kehl-Odelshofen,Baden-W�rttemberg,Z1
 2812,19960829,20220502,156,"48.3647","7.828",Lahr,Baden-W�rttemberg,Z1
 2953,20070401,20220502,854,"47.8597","8.2308",Lenzkirch-Ruhb�hl,Baden-W�rttemberg,Z3
-3690,20061001,20220502,372,"48.3862","8.1426",Oberharmersbach,Baden-W�rttemberg,Z2
 3802,20061001,20161026,315,"48.4765","8.1624",Oppenau,Baden-W�rttemberg,Z2
 4169,20021023,20220503,131,"48.6703","7.9939",Rheinau-Memprechtshofen,Baden-W�rttemberg,Z1
 4175,20030410,20220502,283,"47.559","7.7721",Rheinfelden,Baden-W�rttemberg,Z2
@@ -31,14 +29,11 @@ id,datum_von,datum_bis,hoehe,lat,lon,name,bundesland,height
 4315,20050901,20220502,914,"48.5615","8.2228",Baiersbronn-Ruhestein,Baden-W�rttemberg,Z3
 4351,20061001,20220502,295,"47.5582","7.9773","S�ckingen, Bad/ Rhein",Baden-W�rttemberg,Z2
 4477,20050531,20050930,993,"47.8208","8.186",Schluchsee,Baden-W�rttemberg,Z3
-4655,20061001,20111130,804,"48.5975","8.4268",Seewald-Besenfeld,Baden-W�rttemberg,Z3
 4710,20070322,20220502,718,"48.6191","8.5247",Simmersfeld,Baden-W�rttemberg,Z3
 4712,20060607,20220502,428,"48.0821","8.0919",Simonswald-Obersimonswa,Baden-W�rttemberg,Z2
-5047,20060915,20101213,870,"47.9394","8.1933",Titisee-Neustadt-Langen,Baden-W�rttemberg,Z3
 5049,19981107,20050228,846,"47.8991","8.146",Titisee-Neustadt-Titise,Baden-W�rttemberg,Z3
 5059,20041028,20220502,781,"47.7279","7.9988",Todtmoos,Baden-W�rttemberg,Z3
 5453,20050308,20220502,174,"48.188","7.6976",Weisweil-Waldeckhof,Baden-W�rttemberg,Z1
 5664,20030325,20220502,296,"48.2953","8.2391",Wolfach,Baden-W�rttemberg,Z2
 5688,20181101,20220503,880,"47.7003","8.1057",Dachsberg-Wolpadingen,Baden-W�rttemberg,Z3
-5840,20060912,20220502,600,"48.6671","8.47",Enzkl�sterle,Baden-W�rttemberg,Z3
 7322,20050901,20220502,699,"47.766","7.7214",Malsburg-Marzell,Baden-W�rttemberg,Z3
