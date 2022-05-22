@@ -12,7 +12,7 @@ my_config = CONFIG.ERZGEBIRGE.name
 """ 
 ERZGEBIRGE: 82 stations, 1213 synoptic days
 SCHWARZWALD: 40 stations, 1213 synoptic days
-HARZ: 23 stations, 3149 synoptic days
+HARZ: 38 stations, 3149 synoptic days
 """
 
 # read station IDs for each zone
@@ -56,7 +56,7 @@ for st in stations_all:
                 st_list[i].extend(event_dict[ws])
     
     # stations must contain at least 30 events
-    if c >=30:
+    if c >=1:
         # append station list to zone dict
         if st in stations_z1:   
             z1[st] = st_list
