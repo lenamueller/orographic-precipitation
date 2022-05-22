@@ -35,4 +35,4 @@ hG, = plt.plot([-1,-1],'g-', lw=0.7)
 hR, = plt.plot([-1,-1],'r-', lw=0.7)
 plt.legend((hB, hG, hR),('Z1', 'Z2', 'Z3'), loc=2, frameon=False)
 
-fig.savefig("images/Erzgebirge/boxplot.png", dpi=400, bbox_inches='tight')
+fig.savefig("images/ERZGEBIRGE/boxplot.png", dpi=400, bbox_inches='tight')
