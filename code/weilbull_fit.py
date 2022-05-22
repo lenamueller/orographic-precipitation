@@ -1,15 +1,15 @@
-from scipy import stats 
 from scipy.optimize import curve_fit
-import sys
 import matplotlib.pyplot as plt
 import numpy as np
 import proplot as pplt
 
-from read_intensities import read_intensities_st
+from read_files import read_intensities_st
 from enums import CONFIG
 
 
 my_config = CONFIG.ERZGEBIRGE.name
+first_timesteps = 4 # for plotting
+perc = 0
 
 # read zone data -> dict : {"id:[intensities], ..."}
 z1, z2, z3 = read_intensities_st(my_config)
@@ -20,23 +20,26 @@ def func(x,scale,shape):
     return 1-np.exp(-pow(base=x/scale,exp=shape))
 
 def weibull_fit(intensites:list[float], info):
-    # create plot
+    # reduce intensities to 75. percentile
+    p75 = np.percentile(intensites, perc)
+    intensites = [i for i in intensites if i >= p75]
+    # calc and plot histogram values
     _, ax = plt.subplots(nrows=1, ncols=1, figsize=(6,6))
-    # calculate histogram values
     n, bins, _ = ax.hist(intensites, bins=np.arange(0,20,0.25), density=True, cumulative=True, histtype='stepfilled', alpha=0.2)
-    # modifiy histogram range (min. 4 mm precipitation)
-    xdata = bins[20:-1]
-    ydata = n[20:]
-    # fit function
+    xdata = bins[0:-1]
+    ydata = n[0:]
+    # fit function and plot data and fitted lines
     try:
-        popt, _ = curve_fit(func, xdata, ydata)
-        print("Optimal values for the parameters (popt)", popt, "(station/ws)", info, "number of values", len(intensites))
-        # plot
-        plt.plot(xdata, ydata, 'b-', label='data') # data as line
-        plt.plot(xdata, func(xdata, *popt), 'r-', label=f'fit: scale={round(popt[0],3)}, shape={round(popt[1],3)}') # fitted line
-        plt.legend()
-        plt.savefig(f"images/{my_config}/fit_st{info[0]}_ws{info[1]}.png", dpi=300, bbox_inches="tight")
-        return popt
+        if len(intensites) >= 50:
+            popt, _ = curve_fit(func, xdata, ydata)
+            plt.plot(xdata, ydata, 'b-', label='data') # data as line
+            plt.plot(xdata, func(xdata, *popt), 'r-', label=f'fit: scale={round(popt[0],3)}, shape={round(popt[1],3)}') # fitted line
+            plt.legend()
+            plt.savefig(f"images/{my_config}/fit_st{info[0]}_ws{info[1]}.png", dpi=300, bbox_inches="tight")
+            return popt
+        else:
+            # print("NO FITTING (Not enough precipitation values.)")
+            return (False,False)
     except RuntimeError:
         print("\nThe least-squares minimization fails.\n")
         return (False,False)        
@@ -51,15 +54,59 @@ def calc_params(datadict):
         ws_values: list = []
         for ws in range(len(datadict[station_i])):
             intensities = datadict[station_i][ws]
-            scale,shape = weibull_fit(intensities, info=(station_i,ws))
-            ws_values.append((scale,shape))
+            if len(intensities) > 10:
+                scale,shape = weibull_fit(intensities, info=(station_i,ws))
+                ws_values.append((scale,shape))
         params[station_i] = ws_values
     return params
 
 z1_params = calc_params(z1)
 z2_params = calc_params(z2)
 z3_params = calc_params(z3)
+z_params = [z1_params, z2_params, z3_params]
 
-print("z1_params", z1_params)
-print("z2_params", z2_params)
-print("z3_params", z3_params)
+print("z1_params =", z1_params)
+print("z2_params =", z2_params)
+print("z3_params =", z3_params)
+
+# mm/h
+# z1_params = {445: [(1.5266825182768293, 0.5945849410098769), (1.7269198331282276, 0.7909941428496894), (1.6948958036283135, 0.9375849560882289), (1.6963416368905508, 1.0234844627027615), (False, False), (1.087233235363339, 0.5432883379941522), (False, False)], 633: [(1.4376997185822187, 0.6042711927261017), (False, False), (False, False), (False, False), (False, False)], 721: [(1.371018724457563, 0.662777189256362), (1.5335822556405083, 0.6484584156060715), (1.5059744576119918, 0.6035748427426334), (False, False), (False, False), (False, False)], 815: [(1.1177239384966997, 0.7131847936229525), (1.1997087567673275, 0.7491879546949424), (1.223161940583973, 0.8573294562561474), (False, False), (False, False)], 1001: [(2.1673739551288347, 0.6528475992838956), (2.0782625127632577, 0.6374467195213135), (1.883998954811036, 0.6409472459297425), (False, False), (False, False)], 1050: [(1.5133160722449495, 0.49317139023269296), (2.319536446158377, 0.5089741884552702), (1.75118243415423, 0.5254791484374806), (False, False), (False, False)], 1067: [(False, False), (False, False), (False, False), (False, False), (False, False)], 1166: [(2.079113222601292, 0.6668538425052141), (2.4281684001440875, 0.7124951779681341), (2.045353547561622, 0.6787485804322301), (False, False), (False, False), (False, False), (False, False)], 1210: [(1.5842659418549123, 0.529213353522227), (2.0201043037962814, 0.5618124969308308), (2.0874794220387276, 0.5811714621700169), (False, False), (False, False), (False, False)], 1744: [(2.0569816451607994, 0.7615763348774257), (1.9384183317193628, 0.8349957953351635), (2.057621556585346, 0.829401765859802), (2.808958665895417, 1.0592068842361388), (3.452073407835964, 1.3961304823973453), (3.4960396263114575, 1.7773006549600907), (3.1351915042496774, 2.8244841370353657)], 1793: [(1.4555562018221613, 0.6436700918612525), (1.4043778155782816, 0.6401300734214495), (1.2603075916359276, 0.7499158566189682), (False, False), (False, False), (False, False), (False, False)], 1848: [(1.5496529469904772, 0.6934145638533582), (1.6491018388890744, 0.8052514633428608), (1.854400537035555, 0.9314024707074471), (1.674707516052946, 1.343563410000239), (False, False)], 2278: [(False, False), (False, False), (False, False), (False, False)], 2444: [(1.4243501093371282, 0.673335421555256), (1.6986727331998406, 0.8014887664132692), (1.5962188420649748, 0.7950292416073277), (1.8947798054990903, 0.9012779025386896), (2.00706050366043, 1.3027789423631664), (1.6940135304972732, 1.450497502784908), (False, False)], 2627: [(1.1923677697064503, 0.6342483873814572), (1.3225839718210448, 0.8019193863900637), (1.244681216101138, 0.8213568560601495), (False, False), (False, False), (False, False)], 2641: [(False, False), (False, False), (False, False), (False, False)], 2704: [(False, False), (False, False), (False, False), (False, False), (False, False)], 2856: [(False, False), (False, False), (False, False), (False, False), (False, False), (False, False)], 2878: [(False, False), (False, False), (False, False), (False, False)], 2928: [(2.103734707408645, 0.7300607502277299), (2.1989491519690874, 0.8164346044203504), (2.124509845486645, 0.7968625957633104), (2.0949988904383887, 0.8802956387047695), (False, False), (False, False)], 2932: [(2.742563115520845, 0.7439099587941789), (2.285426748647101, 0.8059296852085538), (2.2956345662720548, 0.8682927665750311), (2.2161203538872147, 1.0626909528978572), (2.236758650585259, 1.0707170890706448), (False, False), (False, False)], 3226: [(False, False), (False, False), (False, False), (False, False)], 3426: [(1.9993543905599689, 0.6488202621398023), (2.292995748254496, 0.690572525363201), (1.7799251078432776, 0.6883313361788628), (False, False), (False, False), (False, False)], 3445: [(1.9821255421369588, 0.7431702080581593), (1.9036426316562767, 1.0902863069927597), (1.9869033249239594, 1.0818987999623848), (False, False), (False, False), (False, False), (False, False)], 3811: [(2.09023508879713, 0.7792215638116269), (2.0488167227976297, 0.8039875812642365), (2.2454244749650085, 0.9002393053354092), (2.2227079365376956, 0.971121492063911), (False, False), (False, False), (False, False)], 5629: [(2.5210162002143375, 0.8833983195442783), (2.605522528633021, 0.831310937628081), (2.4392556620098236, 0.8817535962749684), (2.355063091176979, 0.9504247051238283), (2.264734657545461, 1.7607846444478512), (False, False)], 7323: [(1.6884345765772708, 0.7622386791076772), (1.8937379221201252, 0.8602310299831264), (1.6606969391559718, 0.861211894848429), (2.0327480094531447, 1.0802031286002745), (False, False), (False, False), (False, False)], 7326: [(1.3038665524603543, 0.5831215225760451), (1.5154009944634674, 0.6726190127888203), (1.494832842119003, 0.7023198300810338), (2.042166976275151, 1.1012763149441844), (False, False), (False, False)], 7334: [(2.1937251243195672, 0.6526300685744324), (2.2348129550598217, 0.7282073548115114), (2.574406621617356, 0.8459299417330308), (False, False), (False, False)], 7335: [(False, False), (False, False), (False, False), (False, False), (False, False)]}
+# z2_params = {124: [(1.243186675405385, 0.7405525614745029), (1.390927050281566, 0.8539122868034086), (1.3567088713500577, 0.8851486737485182), (1.208666631672786, 1.1535547516450164), (False, False), (False, False), (False, False)], 131: [(1.7151720872199872, 0.6980435440199676), (1.7206861924467238, 0.7245881520651802), (1.6678106936437849, 0.8432803489355976), (False, False), (False, False)], 222: [(2.4346520566955085, 0.7274877849873477), (3.079909916037311, 0.7405561415205298), (2.896716485905433, 0.8190457296720002), (False, False)], 314: [(2.149754100897493, 1.012984210707172), (2.3895084879846653, 1.3390543650069318), (2.171965900500714, 1.5127607668123122), (False, False), (False, False), (False, False)], 550: [(1.5100354124181785, 0.6750510100119491), (1.975879924863826, 0.734151076311119), (1.978454225725147, 0.9234740264180676), (1.944790121133172, 1.2008858646028469), (1.7624574002509132, 1.759401003817731), (1.511638571970683, 2.335971885466991), (False, False)], 753: [(1.611634261612775, 0.7322691632167583), (1.8347083686296168, 0.8409970198743179), (1.9142400812278644, 0.839590551533521), (1.7160219318294223, 1.2533480782548319), (False, False), (False, False), (False, False)], 853: [(2.533354179544692, 0.78328598727588), (2.6387403038092505, 0.9673786951955766), (2.715884020321769, 1.0136624966843846), (2.870319632249291, 1.1040391706329193), (1.5647460615373356, 1.151309165673763), (False, False)], 991: [(False, False), (False, False), (False, False), (False, False)], 1048: [(3.492896782265563, 0.7893968615555754), (3.6004543797478625, 0.8765215874357617), (3.7905721014271356, 1.01434679161571), (False, False), (False, False)], 1612: [(1.9964258952305565, 0.7235708992630726), (2.2504858449650373, 0.9096846255482219), (2.3534858163071766, 1.0199983765077358), (2.294749194005653, 1.2600011421839885), (False, False), (False, False)], 1684: [(2.4914839488555964, 0.7887638423341948), (2.108490771118673, 1.0250078877986413), (1.9162851426695588, 1.0240342108414782), (False, False)], 2252: [(False, False), (3.7516941404571815, 0.8681998280347208), (False, False), (False, False), (False, False), (False, False)], 2958: [(False, False), (False, False), (False, False), (False, False), (False, False), (False, False)], 2985: [(2.711936283529239, 0.746036519190152), (3.4144282648336666, 0.8471506676063242), (3.2825224997605558, 0.839901706998937), (3.7597108649854625, 1.0322095000330411), (False, False), (False, False)], 3094: [(1.247223776307764, 0.5976712822136959), (1.4644777387117487, 0.6761463207008015), (1.5166507512576581, 0.8074028510706063), (False, False)], 3234: [(1.4651394734364722, 0.5628493625199403), (1.6527100638502614, 0.679309063709083), (1.717666329995975, 0.7997422544101089), (2.340477189373756, 0.7184817209063832), (2.716996251412817, 0.7736069625537407), (False, False), (False, False)], 3279: [(1.5123911799110925, 0.6281066639834461), (1.8940825722015957, 0.7140014957894125), (1.9326731900201735, 0.7738892463298911), (1.9551061337057694, 0.9954612024265633), (False, False), (False, False), (False, False)], 3289: [(2.193888373700535, 0.5792287345180789), (False, False), (False, False), (False, False), (False, False), (False, False)], 3946: [(2.2165528225260083, 0.577148462522162), (3.5404712046505034, 0.6645709364688642), (3.2279338344867847, 0.742482064230825), (False, False), (False, False)], 4997: [(1.2774394272223777, 0.5252093389155789), (1.2339335230036321, 0.6419068404401507), (1.2888527663482983, 0.5869564149842006), (1.25777363501934, 0.8746187011805127), (1.2662731278742854, 1.5109049624530344), (False, False), (False, False)], 5395: [(1.3659755453795575, 0.6147784827873742), (1.3416718104243024, 0.6758987324465984), (1.2686682444165784, 0.7041714258754666), (False, False), (False, False), (False, False), (False, False)], 5750: [(1.334918206464747, 0.5976255459048962), (1.7001131376929588, 0.7153108272249002), (1.6570133012704067, 0.7608940458277144), (2.8429171746601223, 0.634851873070492), (False, False), (False, False)], 5763: [(1.6487619569178504, 0.6367879494384752), (1.7978996491515375, 0.73811556407245), (1.7484257093377484, 0.9089638059676911), (2.0297424679621088, 1.0975986446493582), (False, False), (False, False)], 5797: [(1.59597380836259, 0.6334962663091877), (2.148763773314537, 0.5563346593334326), (1.7160729166678876, 0.5547745055697769), (False, False), (False, False), (False, False)], 5814: [(1.8900674267048423, 0.723670285290785), (1.9152330392466348, 0.8025378022283451), (1.7685799231067258, 0.6521752718936015), (False, False)], 6129: [(0.9851397677297816, 0.6927797687513088), (False, False), (0.9219360452258937, 0.8318804114177459), (False, False)], 6268: [(2.0697152230351823, 0.6984564484223913), (2.3033811696434183, 0.8519041595993848), (2.405416539826061, 0.9145190844914407), (False, False), (False, False), (False, False)], 6271: [(1.6913762875640865, 0.6157754292729547), (1.689782149027971, 0.7796421926227827), (1.7998082724500495, 0.9110999773283981), (2.195472123162005, 1.0382845458460042), (2.2379437829663154, 1.504603136142136), (False, False)], 6314: [(1.3024726689959458, 0.7255174729574111), (1.4427888789563483, 0.7277383687310442), (1.4162040091329418, 0.7565295468594361), (False, False), (False, False)], 7328: [(1.6688431939414703, 0.689326651984854), (1.7451245309901255, 0.7576201076440781), (1.7253710446367885, 0.684300137545681), (1.7650604813127693, 0.7579106574520239), (False, False), (False, False), (False, False)], 7419: [(1.272279273821841, 0.8038637843887682), (1.1496102029001753, 0.7669183100855302), (1.1941426377625695, 1.0851602917569558), (False, False), (False, False)]}
+# z3_params = {551: [(False, False), (False, False), (False, False), (False, False), (False, False)], 840: [(2.92252801804749, 0.7749133221157395), (4.5067364276836654, 0.8746297744019441), (4.921944325756446, 0.963584277705876), (3.5819345478157034, 0.9836211454481453), (False, False), (False, False)], 1207: [(False, False), (False, False), (False, False), (False, False), (False, False)], 1358: [(False, False), (False, False), (False, False)], 2233: [(1.705400435378012, 0.5737600830273812), (1.8943573053992322, 0.641867901365765), (1.9066107262894443, 0.6550177951474598), (False, False), (False, False)], 2261: [(2.0514645535286373, 0.7159779055839702), (2.359440150651503, 0.8496506065594638), (2.947441081931859, 0.830538904196483), (False, False), (False, False)], 2274: [(1.5354967582344925, 0.5157649808164433), (1.3455451020351206, 0.5407938072753168), (False, False), (False, False)], 2992: [(False, False), (False, False), (False, False), (False, False), (False, False), (False, False)], 3034: [(False, False), (False, False), (False, False), (False, False), (False, False), (False, False)], 3166: [(1.98898583273998, 0.6444380046409988), (2.503010957255672, 0.6132900255910044), (2.0604570025883624, 0.6245519595004962), (False, False)], 3175: [(2.4837588856617243, 0.7145072005539789), (2.491125962319337, 0.7104947841128813), (2.5549142327356953, 0.8348864747479827), (False, False), (False, False)], 4109: [(False, False), (False, False), (False, False), (False, False), (False, False), (False, False)], 4464: [(2.425876888903521, 0.6299407242668854), (2.8208267421442983, 0.7223715833394373), (2.9869283994465836, 0.6977467752891081), (False, False), (False, False)], 4818: [(1.8950768708754282, 0.6641915243191029), (1.624429257841821, 0.7470642148341426), (False, False), (False, False), (False, False)], 4982: [(1.61419850347065, 0.8905774518419398), (1.5061291204688068, 0.9099380583398531), (1.5968808796474323, 1.076230515067978), (1.6543334808343713, 1.1262625926310865), (1.815239251472886, 1.5400249291895511), (False, False), (False, False)], 5779: [(3.0392598281167738, 0.8496192062319748), (3.15295909409398, 0.8277585758421051), (3.0167342181710954, 0.9236365300221353), (3.419508503455812, 1.130792546367658), (False, False)], 6338: [(3.999587804510109, 0.6354527514853259), (5.616040174412817, 0.8676459662689734), (False, False), (False, False), (False, False), (False, False)], 7329: [(1.4482371790129591, 0.6430984604753451), (False, False), (False, False), (False, False)], 7333: [(2.7929121749039583, 0.8049721704843502), (2.874591995231829, 0.9205647356792296), (3.0551889589112857, 0.9575420328316974), (2.304896136777081, 0.9477194757361352), (False, False), (False, False)], 7343: [(3.470706246141867, 0.7921154137715967), (3.736707766769394, 0.999284938966294), (4.146165329566604, 1.0385191075223865), (False, False), (False, False)], 7394: [(3.78678778559416, 0.5802899350903532), (3.274336200297535, 0.6037154954686468), (3.2539745228066415, 0.6988453530340426), (False, False), (False, False)]}
+
+# initialize plot
+fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(10,3))
+labels = ["10min", "20min", "30min", "1h", "2h"]
+markers = [".",".", ".", "."]
+colors = ["y", "orange", "red", "darkred"]
+
+for z in range(3):
+    params_dict = z_params[z]
+    for st_i,tuples_i in params_dict.items():
+        # select only tuples for the wanted time steps
+        tuples_i = tuples_i[:first_timesteps]
+        # remove (False,False) tuples
+        tuples_i = [t for t in tuples_i if t != (False,False)]
+        x_scale = [tuples_i[i][0] for i in range(len(tuples_i))]
+        y_shape = [tuples_i[i][1] for i in range(len(tuples_i))]
+        # plot line
+        ax[z].plot(x_scale, y_shape, linewidth=0.4, alpha=0.5, color="gray")
+        # plot markers
+        for i in range(len(tuples_i)):
+            x = x_scale[i]
+            y = y_shape[i]
+            if x == False:
+                continue
+            else:
+                ax[z].scatter(x,y, marker=markers[i], s=8, c=colors[i], label=labels[i])
+
+ax[0].set_title("Z1: 0 - 200 m AMSL")
+ax[1].set_title("Z2: 200 - 400 m AMSL")
+ax[2].set_title("Z3: 400 m AMSL <")
+ax[0].set_xlabel(r'scale $\lambda$')
+ax[0].set_ylabel(r'shape $\kappa$')
+ax[0].set_xscale('log')
+ax[1].set_xscale('log')
+ax[2].set_xscale('log')
+plt.setp(ax, xlim=[0,10], ylim=[0,2])
+plt.savefig(f"images/{my_config}/Scatter_{perc}_V9.png", dpi=400, bbox_inches="tight")
