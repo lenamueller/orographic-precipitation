@@ -1,3 +1,4 @@
+import pickle
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -103,3 +104,14 @@ def read_station_data(station_id:int)->pd.DataFrame:
         df_st = df_st.sort_values(by='MESS_DATUM')
     
         return df_st
+
+
+def read_intensities_st(region):
+    # output: dictionaries z1 = {"7394:[[],[],[],[],[],[],[]]"} with intensities in each list (window size)
+    with open(f'metdata/intensities/intensities_{region}_z1.pkl', 'rb') as f:
+        z1 = pickle.load(f)
+    with open(f'metdata/intensities/intensities_{region}_z2.pkl', 'rb') as f:
+        z2 = pickle.load(f)
+    with open(f'metdata/intensities/intensities_{region}_z3.pkl', 'rb') as f:
+        z3 = pickle.load(f)
+    return z1, z2, z3
