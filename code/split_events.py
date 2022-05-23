@@ -10,8 +10,9 @@ class States(Enum):
 
 
 class StateMachine:
-    def __init__(self, trigger_level: int):
+    def __init__(self, trigger_level: int, min_event_length:int):
         self.trigger_level = trigger_level
+        self.min_event_length = min_event_length
         self.counter = 0
         self.result_list: list[list[float]] = []
         self.result_list_dates: list[list[datetime]] = []
@@ -51,7 +52,7 @@ class StateMachine:
             # print(self.counter)
             if self.counter >= self.trigger_level:
                 # independent storms below 30 min duration are ignored
-                if len(self.accumulate_list)>3:
+                if len(self.accumulate_list)>self.min_event_length:
                     self.result_list.append(self.accumulate_list)
                     self.result_list_dates.append(self.accumulate_list_dates)
                 self.accumulate_list = []
@@ -76,7 +77,7 @@ class StateMachine:
                 self.__finish_transition(pr,d)
 
 
-def find_precipitation_events(precipitation: list[float], dates: list[datetime], trigger_level: int = 36) -> Tuple[list[list[float]], list[list[datetime]]]:
+def find_precipitation_events(precipitation: list[float], dates: list[datetime], trigger_level: int = 36, min_event_length: int = 3) -> Tuple[list[list[float]], list[list[datetime]]]:
     # ! return empty list for empty input list
     if precipitation == []:
         return [],[]
@@ -87,7 +88,7 @@ def find_precipitation_events(precipitation: list[float], dates: list[datetime],
     if type(precipitation[0]) not in (float, int):
         raise TypeError("Input list is not of type float.")
     
-    state_machine = StateMachine(trigger_level)
+    state_machine = StateMachine(trigger_level, min_event_length)
     for (p,d) in zip(precipitation,dates):
         state_machine.feed(p,d)
         
