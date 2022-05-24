@@ -24,8 +24,13 @@ for z in range(3):
         x_lineplot, y_lineplot = [],[]
         # select only first durations (10min, 20min, 30min, 60min, ...)
         tuples_i = tuples_i[:first_timesteps]
-        # remove (False,False) tuples
-        for t in range(len(tuples_i)):
+        # select number of data spots per station
+        if len(tuples_i) > len(colors):
+            n = len(colors)
+        else:
+            n = n = len(tuples_i)
+        for t in range(n):
+            # remove (False,False) tuples
             if tuples_i[t] != (False,False):
                 ax[z].scatter(tuples_i[t][0], tuples_i[t][1], marker=".", s=8, c=colors[t], zorder=3)
                 x_lineplot.append(tuples_i[t][0])
