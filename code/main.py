@@ -1,17 +1,16 @@
-import pickle
 import numpy as np
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 import proplot as pplt
 
-from read_files import read_station_ids, read_station_data, read_owk, read_intensities_st
+from read_files import read_station_ids, read_station_data, read_owk
 from split_events import find_precipitation_events
 from rolling_window import rolling_intensity
 from enums import CONFIG
 
 
-my_config = CONFIG.ERZGEBIRGE.name
-min_dry_period = 18 # number of 10min - time steps 
+my_config = CONFIG.HARZ.name
+min_dry_period = 36 # number of 10min - time steps  -> 36 (6h), 30 (5h) 24 (4h), 18 (3h)
 min_event_length = 3 # reducing noise
 min_percentile = 75 # focus on right-tail characteristics
 min_intensity_values = 5 # min data points for fitting
@@ -23,7 +22,7 @@ stations_z1, stations_z2, stations_z3, stations_all = read_station_ids(my_config
 # read OWK dates and create a datetime list of selected synoptic situations
 owk, owk_all = read_owk(my_config)
     
-print(my_config, "\nNumber of stations:", len(stations_all), "Number of OWK days:", len(owk_all))
+print(my_config, " ----- Number of stations:", len(stations_all), "Number of OWK days:", len(owk_all))
 # create empty zone dictionary for intensity values -> dict : {"id:[intensities], ..."}
 z1:dict = {}
 z2:dict = {}
@@ -84,12 +83,12 @@ def weibull_fit(intensites:list[float], info):
     # fit function and plot data and fitted lines
     try:
         if len(intensites) >= min_intensity_values:
-            popt, _ = curve_fit(func, xdata, ydata)
+            popt, _ = curve_fit(func, xdata, ydata, p0=(1,3))
             plt.plot(xdata, ydata, 'b-', label='data') # data as line
             plt.plot(xdata, func(xdata, *popt), 'r-', label=f'fit: scale={round(popt[0],3)}, shape={round(popt[1],3)}') # fitted line
             plt.legend()
-            plt.savefig(f"images/{my_config}/fit_st{info[0]}_ws{info[1]}.png", dpi=300, bbox_inches="tight")
-            if popt[1] < 0.00001:
+            # plt.savefig(f"images/{my_config}/fit_st{info[0]}_ws{info[1]}.png", dpi=300, bbox_inches="tight")
+            if popt[1] < 0.00001: # prevents data points in the lower left corner
                 return (False,False)
             else:
                 return popt
@@ -119,9 +118,9 @@ z2_params = calc_params(z2)
 z3_params = calc_params(z3)
 z_params = [z1_params, z2_params, z3_params]
 
-print("z1_params =", z1_params)
-print("z2_params =", z2_params)
-print("z3_params =", z3_params)
+# print("z1_params =", z1_params)
+# print("z2_params =", z2_params)
+# print("z3_params =", z3_params)
 
 # plot 
 fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(10,3))
@@ -134,18 +133,17 @@ for z in range(3):
         # select only tuples for the wanted time steps
         tuples_i = tuples_i[:first_timesteps]
         # remove (False,False) tuples
+        x_lineplot, y_lineplot = [],[]
         for t in range(len(tuples_i)):
-            x_lineplot, y_lineplot = [],[]
             if tuples_i[t] != (False,False):
                 ax[z].scatter(tuples_i[t][0], tuples_i[t][1], marker=".", s=8, c=colors[t], label=labels[t]) # plot markers
                 x_lineplot.append(tuples_i[t][0])
                 y_lineplot.append(tuples_i[t][1])
-        ax[z].plot(x_lineplot, y_lineplot, linewidth=1, alpha=0.5, color="gray") # plot line
+        ax[z].plot(x_lineplot, y_lineplot, linewidth=0.5, alpha=0.5, color="gray") # plot line
         ax[z].set_title(titles[z])
         ax[z].set_xscale('log')
-        ax[z].set_xlim([0,20])
-        ax[z].set_ylim([0,10])
-
+ax[0].set_xlabel("scale $\lambda$ [mm/h]")
+ax[0].set_ylabel("shape $\kappa$ [-]")
+plt.setp(ax, xlim=[0,20], ylim=[0,5])
 plt.savefig(f"images/Scatter/{my_config}_dry{min_dry_period}_len{min_event_length}_p{min_percentile}_nb{min_intensity_values}.png", dpi=400, bbox_inches="tight")
-
 print("Done")
