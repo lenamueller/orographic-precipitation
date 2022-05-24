@@ -10,7 +10,7 @@ from MYCONFIG import my_config, min_intensity_values, min_percentile, min_dry_pe
 
 
 # read zone data
-z1, z2, z3 = read_intensities(my_config)
+z1, z2, z3 = read_intensities(my_config, min_dry_period)
 
 
 def func(x,scale,shape):
