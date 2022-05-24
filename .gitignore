@@ -12,6 +12,7 @@ metdata/celltracks/*
 metdata/DWD_RR_data
 metdata/opendata.dwd.de/*
 metdata/intensities/*
+metdata/parameters/*
 
 venv/*
 geodata/Map_Uebersicht.png
