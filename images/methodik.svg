@@ -25,8 +25,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.1224748"
-     inkscape:cx="1242.3442"
-     inkscape:cy="491.32508"
+     inkscape:cx="1171.0731"
+     inkscape:cy="491.32506"
      inkscape:window-width="1920"
      inkscape:window-height="1019"
      inkscape:window-x="0"
@@ -3106,7 +3106,7 @@
     <text
        xml:space="preserve"
        style="font-size:3.88056px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:none;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:round"
-       x="278.14011"
+       x="281.84433"
        y="157.0919"
        id="text33230-5"
        inkscape:export-filename="/home/lena/Documents/Master/Sem_2/FachvorträgeHydro/orographic_precipitation/images/methodik_3.png"
@@ -3115,8 +3115,8 @@
          sodipodi:role="line"
          id="tspan33228-1"
          style="stroke-width:0.264583"
-         x="278.14011"
-         y="157.0919">P [mm/10 min]</tspan></text>
+         x="281.84433"
+         y="157.0919">x [mm/h]</tspan></text>
     <g
        id="g138565"
        transform="translate(-1.4923442,-3.1750001)"
