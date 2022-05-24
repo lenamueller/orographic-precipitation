@@ -24,15 +24,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.28061869"
-     inkscape:cx="764.38246"
-     inkscape:cy="222.72216"
+     inkscape:zoom="1.1224748"
+     inkscape:cx="1242.3442"
+     inkscape:cy="491.32508"
      inkscape:window-width="1920"
      inkscape:window-height="1019"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g138565"
+     inkscape:current-layer="layer1"
      inkscape:snap-global="false">
     <inkscape:grid
        type="xygrid"
@@ -818,7 +818,7 @@
       <rect
          style="fill:#ffffff;fill-opacity:0.992858;stroke:none;stroke-width:1.40919;stroke-miterlimit:4;stroke-dasharray:1.40919, 1.40919;stroke-dashoffset:0;stroke-opacity:0.960784"
          id="rect62376-2-4"
-         width="111.12499"
+         width="111.125"
          height="74.083336"
          x="139.17085"
          y="169.33333" />
@@ -1249,7 +1249,7 @@
          y="136.07654">...</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.29167px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.29167px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:round"
        x="267.67535"
        y="94.727707"
        id="text61522-1-4"
@@ -1257,13 +1257,9 @@
        inkscape:export-xdpi="800"
        inkscape:export-ydpi="800"><tspan
          sodipodi:role="line"
-         id="tspan102533"
-         x="267.67535"
-         y="94.727707">3. Weibull-CDF anpassen zur </tspan><tspan
+         id="tspan9321">3. Weibull-CDF an 75% - </tspan><tspan
          sodipodi:role="line"
-         id="tspan102535"
-         x="267.67535"
-         y="101.34229">Ermittung der Parameter</tspan></text>
+         id="tspan9323">Perzentil anpassen</tspan></text>
     <g
        id="g122940"
        transform="matrix(1.3637025,0,0,1.3637025,-124.78103,-38.66944)"
