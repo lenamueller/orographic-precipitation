@@ -21,7 +21,7 @@ def read_owk(my_config):
     if (my_config == "HARZ") or (my_config == "THUERINGERWALD"):
         owk = {"SWAZF":[], "SWZAF":[], "SWZZF":[], "XXZZF":[], "XXZAF":[], "XXAZF":[]}    
     
-    for index, row in owk_df.iterrows():
+    for _, row in owk_df.iterrows():
         owk_i = row["owk_abbreviation"]
         owk_datetime = row["datetime"]
         if owk_i in owk.keys():
@@ -67,6 +67,15 @@ def read_station_ids(my_config):
     stations_all = stations_z1 + stations_z2 + stations_z3   
     return stations_z1, stations_z2, stations_z3, stations_all
 
+def read_station_heights(my_config):
+    path_stations = f'geodata/DWD_RR_Stationen/Stationen_Selektion_{my_config}.csv'
+    height_dict = {}
+    stations = pd.read_csv(path_stations, delimiter=',')
+    ids = stations["id"].tolist() #int
+    hoehen = stations["hoehe"].tolist() #int
+    for i in range(len(ids)):
+        height_dict[ids[i]] = hoehen[i]
+    return height_dict
 
 path_dwddata = 'metdata/opendata.dwd.de/climate_environment/CDC/observations_germany/climate/10_minutes/precipitation/historical/'
 data_files = [file for file in os.listdir(path_dwddata) if file.startswith("produkt_zehn_min_rr_")]
@@ -106,12 +115,22 @@ def read_station_data(station_id:int)->pd.DataFrame:
         return df_st
 
 
-def read_intensities_st(region):
+def read_intensities(region:str, min_dry_period:int):
     # output: dictionaries z1 = {"7394:[[],[],[],[],[],[],[]]"} with intensities in each list (window size)
-    with open(f'metdata/intensities/intensities_{region}_z1.pkl', 'rb') as f:
+    with open(f'metdata/intensities/intensities_{region}_z1_DRY{min_dry_period}.pkl', 'rb') as f:
         z1 = pickle.load(f)
-    with open(f'metdata/intensities/intensities_{region}_z2.pkl', 'rb') as f:
+    with open(f'metdata/intensities/intensities_{region}_z2_DRY{min_dry_period}.pkl', 'rb') as f:
         z2 = pickle.load(f)
-    with open(f'metdata/intensities/intensities_{region}_z3.pkl', 'rb') as f:
+    with open(f'metdata/intensities/intensities_{region}_z3_DRY{min_dry_period}.pkl', 'rb') as f:
         z3 = pickle.load(f)
     return z1, z2, z3
+
+def read_parameters(region:str, min_dry_period:int, min_percentile:int):
+    # output: dictionaries z1_params = {"id":[(scale_10min, shape_10min), ... , (scale_6h,shape_6h)]}
+    with open(f'metdata/parameters/intensities_{region}_z1_DRY{min_dry_period}_PER{min_percentile}.pkl', 'rb') as f:
+        z1_params = pickle.load(f)
+    with open(f'metdata/parameters/intensities_{region}_z2_DRY{min_dry_period}_PER{min_percentile}.pkl', 'rb') as f:
+        z2_params = pickle.load(f)
+    with open(f'metdata/parameters/intensities_{region}_z3_DRY{min_dry_period}_PER{min_percentile}.pkl', 'rb') as f:
+        z3_params = pickle.load(f)
+    return z1_params, z2_params, z3_params
