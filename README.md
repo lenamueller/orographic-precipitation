@@ -2,7 +2,8 @@
 [![python - 3.10.1](https://img.shields.io/badge/python-3.10.1-ffe05c?logo=python&logoColor=4685b7)](https://)
 [![field of application - meteorology, hydrology](https://img.shields.io/badge/field_of_application-meteorology%2C_hydrology-00aaff)](https://)
 
-<img align="right" src="geodata/Map_Uebersicht_EN.png" alt="geodata/Map_Uebersicht_EN" width="500"/>    
+<img src="geodata/Map_Uebersicht_EN.png" alt="geodata/Map_Uebersicht_EN" width="400"/>    
+<img src="images/Scatter/Scatter_ERZGEBIRGE_DRY36_PER0.png" alt="images/Scatter/Scatter_ERZGEBIRGE_DRY36_PER0" width="400"/>
 
 This python script analyzes orographic effects on extreme precipitation events and statistics for the Ore Mountains.    
 
