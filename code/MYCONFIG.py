@@ -12,7 +12,7 @@ class CONFIG(Enum):
 my_config = CONFIG.SCHWARZWALD.name
 
 # ! configure ! number of 10min - time steps  -> 36 (6h), 30 (5h) 24 (4h), 18 (3h)
-min_dry_period = 36        
+min_dry_period = 30
 
 # ! configure ! focus on right-tail characteristics
 min_percentile = 0

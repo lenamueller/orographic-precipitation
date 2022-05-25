@@ -39,8 +39,9 @@ for z in range(3):
         ax[z].plot(x_lineplot, y_lineplot, linewidth=0.5, alpha=0.5, color="gray", zorder=1)
     ax[z].set_title(titles[z])
     ax[z].set_xscale('log', base=2)
-    ax[z].set_xlim([0,8])
+    ax[z].set_xlim([0,9])
     ax[z].set_ylim([0,3])
+    
 
 for i in range(len(labels)):
     ax[2].scatter(-1,-1,c=colors[i],label=labels[i])
