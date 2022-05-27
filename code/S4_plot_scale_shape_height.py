@@ -5,7 +5,7 @@ import numpy as np
 
 from reading_functions import read_parameters, read_station_heights
 
-from MYCONFIG import my_config, min_dry_period, min_percentile
+from main import my_config, min_dry_period, min_percentile
 
 
 z1_params, z2_params, z3_params = read_parameters(my_config, min_dry_period, min_percentile)
