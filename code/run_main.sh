@@ -3,8 +3,13 @@
 # exit on first error
 set -e
 
-# area, dry period length, percentile, min event length, 
-# min number for fitting, number of durations
+# arguments:
+# 1) area
+# 2) dry period length 
+# 3) percentile 
+# 4) min event length 
+# 5) min number for fitting 
+# 6) number of durations to plot
 
 # Harz
 python code/main.py HARZ 24 75 3 10 5 &
