@@ -1,7 +1,7 @@
 from enum import Enum
 import sys
 
-from S1_read_intensities import get_intensities
+from S1_get_intensities import get_intensities
 from S2_get_parameters import get_parameters
 from S3_plot_scale_shape import plot_scale_shape
 

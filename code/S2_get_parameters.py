@@ -24,7 +24,7 @@ def get_parameters(my_config, min_percentile, min_dry_period, min_intensity_valu
     z1, z2, z3 = read_intensities(my_config, min_dry_period)
 
     # calculate scale and shape parameters
-    for i in range(len(3)):
+    for i in range(3):
         datadicts = [z1, z2, z3]
         datadict = datadicts[i]
         params:dict = {}
