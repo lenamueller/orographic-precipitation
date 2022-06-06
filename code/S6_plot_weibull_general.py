@@ -39,3 +39,22 @@ for i in range(2):
 
 plt.xlim([0,7])
 plt.savefig("images/Parameters_Fig2.png", dpi=300, bbox_inches="tight")
+
+
+import numpy as np
+from surpyval import Weibull
+from lifelines.fitters.weibull_fitter import WeibullFitter
+
+
+intensities = np.array([1,2,3,1,2,3,2,10,12,2,1,2,1,1])
+intensities2 = np.array([1,2,3,1,2,3,2,2,1,2,1,1])
+censored = np.array([0,0,0,0,0,0,0,-1, -1, 0, 0, 0, 0, 0])
+censored2 = np.array([0,0,0,0,0,0,0,0,0,0,0,0])
+
+# model = Weibull.fit(x=intensities, c=censored)
+# print(model.params) # lamda, kappa
+# model = Weibull.fit(x=intensities, tl=censored)
+# print(model.params) # lamda, kappa
+# model = Weibull.fit(x=intensities2, tl=censored2)
+# print(model.params) # lamda, kappa
+
