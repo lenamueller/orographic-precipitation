@@ -42,7 +42,6 @@ def get_parameters(my_config, min_percentile, min_dry_period, min_intensity_valu
                     p = (scale,shape)
                 ws_values.append(p)
             params[station_i] = ws_values
-        print("i", i, params.keys())
 
         # save zone dictionary to files
         with open(f'metdata/parameters/intensities_{my_config}_z{i+1}_DRY{min_dry_period}_PER{min_percentile}.pkl', 'wb') as f:
