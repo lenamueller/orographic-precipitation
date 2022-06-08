@@ -15,11 +15,10 @@ min_mean_int = 1
 
 stations_z1, stations_z2, stations_z3, stations_all = read_station_ids(my_config)
 _, owk_all = read_owk(my_config)
-    
-keys = np.arange(40,210,10)
-z1:dict = dict((x,[]) for x in keys)
-z2:dict = dict((x,[]) for x in keys)
-z3:dict = dict((x,[]) for x in keys)
+
+z1_all:list = []
+z2_all:list = []
+z3_all:list = []
 
 # get events
 for st in stations_all:
@@ -31,31 +30,48 @@ for st in stations_all:
         # ! event must have min mean intensity
         if (date_begin.date() in owk_all) and (date_end.date() in owk_all) and len(e) <= 20 and np.mean(e) > min_mean_int:
             if st in stations_z1:   
-                z1[len(e)*10].append(e)
+                # z1[len(e)*10].append(e)
+                z1_all.append(e)
             if st in stations_z2:
-                z2[len(e)*10].append(e)
+                # z2[len(e)*10].append(e)
+                z2_all.append(e)
             if st in stations_z3:
-                z3[len(e)*10].append(e)
+                # z3[len(e)*10].append(e)
+                z3_all.append(e)
 
+
+z_all = [z1_all, z2_all, z3_all]
 
 # plot events
 fig, axs = plt.subplots(nrows=1, ncols=3, figsize=(10,4))
+mins, means, maxs = [],[],[]
+for i in range(3):
+    z_i = z_all[i]
+    zeros_list = []
+    if z_i:
+        for event in z_i:
+            if 8 <= len(event) <= 12:
+                max_index = event.index(max(event)) # get index with max. intensity
+                event_len = len(event)
+                n_before = (9-max_index)
+                zeros_before = [0] * n_before
+                zeros_after = [0] * (19-n_before-event_len)
+                zeros_list.append(zeros_before+event+zeros_after)
+    means.append(np.mean(np.array(zeros_list), axis=0))
+    mins.append(np.min(np.array(zeros_list), axis=0))            
+    maxs.append(np.max(np.array(zeros_list), axis=0))            
 
-z = [z1,z2,z3]
-colors = ["r", "g", "b"]
+print(means[0])
 
-for len_i in range(40,190,10): # for each duration
-    for i in range(3):
-        z_i = z[i]
-        # empty list would create nan mean
-        if z_i[len_i] != []:
-            # calculate mean intensity
-            event_mean = np.mean(np.array(z_i[len_i]), axis=0)
-            event_mean = event_mean.tolist()
-            event_max = max(event_mean)
-            ev_max_i = event_mean.index(event_max) # get index with max. intensity
-            x = np.arange(-ev_max_i, len(event_mean)-ev_max_i, 1) # center max. intensity at x = 0
-            axs[i].plot(x,event_mean, color=colors[i], lw=0.5)
+# axs[0].plot(np.arange(-9,10,1), means[0], color="k")
+axs[0].plot(np.arange(-9,10,1), mins[0], color="g")
+axs[0].plot(np.arange(-9,10,1), maxs[0], color="r")
+# axs[1].plot(np.arange(-9,10,1), means[1], color="k")
+axs[1].plot(np.arange(-9,10,1), mins[1], color="g")
+axs[1].plot(np.arange(-9,10,1), maxs[1], color="r")
+# axs[2].plot(np.arange(-9,10,1), means[2], color="k")
+axs[2].plot(np.arange(-9,10,1), mins[2], color="g")
+axs[2].plot(np.arange(-9,10,1), maxs[2], color="r")
             
 for i in range(3):
     axs[i].set_xticks(np.arange(-10,10,2))
