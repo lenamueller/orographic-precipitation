@@ -1,84 +1,105 @@
-import matplotlib
+import math
+import statistics
 import matplotlib.pyplot as plt
 import proplot as pplt
-import numpy as np 
+import numpy as np
 
 from reading_functions import read_station_ids, read_owk, read_station_data
 from split_events import find_precipitation_events
-# from main import my_config, min_dry_period, min_event_length
-my_config = "HARZ"
-min_dry_period = 36
-min_event_length = 3
 
 
-min_mean_int = 1
+def normalize_list_against_maximum(input_list):
+    list_max = max(input_list)
+    norm_list=[x/list_max for x in input_list]
+    return norm_list
 
-stations_z1, stations_z2, stations_z3, stations_all = read_station_ids(my_config)
-_, owk_all = read_owk(my_config)
+def plot_temporal(my_config, min_dry_period, min_event_length):
+    stations_z1, stations_z2, stations_z3, stations_all = read_station_ids(my_config)
+    _, owk_all = read_owk(my_config)
 
-z1_all:list = []
-z2_all:list = []
-z3_all:list = []
+    z1_all: list = []
+    z2_all: list = []
+    z3_all: list = []        
 
-# get events
-for st in stations_all:
-    df_st = read_station_data(st)
-    events, events_dates = find_precipitation_events(df_st["RWS_10"].tolist(), df_st["MESS_DATUM"].tolist(), min_dry_period, min_event_length)
-    for e,d in zip(events, events_dates):
-        date_begin = d[0]
-        date_end = d[-1]
-        # ! event must have min mean intensity
-        if (date_begin.date() in owk_all) and (date_end.date() in owk_all) and len(e) <= 20 and np.mean(e) > min_mean_int:
-            if st in stations_z1:   
-                # z1[len(e)*10].append(e)
-                z1_all.append(e)
-            if st in stations_z2:
-                # z2[len(e)*10].append(e)
-                z2_all.append(e)
-            if st in stations_z3:
-                # z3[len(e)*10].append(e)
-                z3_all.append(e)
+    # get events
+    for st in stations_all:
+        df_st = read_station_data(st)
+        events, events_dates = find_precipitation_events(df_st["RWS_10"].tolist(
+        ), df_st["MESS_DATUM"].tolist(), min_dry_period, min_event_length)
+        for e, d in zip(events, events_dates):
+            date_begin = d[0]
+            date_end = d[-1]
+            # ! event must have min mean intensity
+            if (date_begin.date() in owk_all) and (date_end.date() in owk_all) and len(e) <= 20 and np.mean(e) > 1:
+                if st in stations_z1:
+                    # z1[len(e)*10].append(e)
+                    z1_all.append(e)
+                if st in stations_z2:
+                    # z2[len(e)*10].append(e)
+                    z2_all.append(e)
+                if st in stations_z3:
+                    # z3[len(e)*10].append(e)
+                    z3_all.append(e)
 
 
-z_all = [z1_all, z2_all, z3_all]
+    z_all = [z1_all, z2_all, z3_all]
 
-# plot events
-fig, axs = plt.subplots(nrows=1, ncols=3, figsize=(10,4))
-mins, means, maxs = [],[],[]
-for i in range(3):
-    z_i = z_all[i]
-    zeros_list = []
-    if z_i:
-        for event in z_i:
-            if 8 <= len(event) <= 12:
-                max_index = event.index(max(event)) # get index with max. intensity
-                event_len = len(event)
-                n_before = (9-max_index)
-                zeros_before = [0] * n_before
-                zeros_after = [0] * (19-n_before-event_len)
-                zeros_list.append(zeros_before+event+zeros_after)
-    means.append(np.mean(np.array(zeros_list), axis=0))
-    mins.append(np.min(np.array(zeros_list), axis=0))            
-    maxs.append(np.max(np.array(zeros_list), axis=0))            
+    # plot events
+    fig, axs = plt.subplots(nrows=2, ncols=1, figsize=(4, 8))
+    plot_dict: dict = {"mins": [], "maxs": [],
+                    "mean": [], "p25": [], "p75": [], "median": []}
+    for i in range(3):
+        z_i = z_all[i]
+        zeros_list = []
+        if z_i:
+            for event in z_i:
+                if len(event) >= 5:
+                    # new nan list
+                    new_entry = [np.nan for i in range(40)]
+                    middle = 20
+                    # get index with max intensity
+                    max_index = event.index(max(event))
+                    # split into two parts
+                    first_part = event[:max_index]
+                    second_part = event[max_index:]
+                    # add parts to nan list
+                    new_entry[middle-len(first_part):middle] = first_part
+                    new_entry[middle: middle+len(second_part)] = second_part
+                    # replace remaining nan with 0
+                    new_entry2 = [0 if math.isnan(x) else x for x in new_entry]
+                    zeros_list.append(new_entry2)
 
-print(means[0])
+        # means.append(np.mean(np.array(zeros_list), axis=0))
+        plot_dict["mins"].append(np.min(np.array(zeros_list), axis=0))
+        plot_dict["maxs"].append(np.max(np.array(zeros_list), axis=0))
+        plot_dict["p25"].append([np.percentile(col, 25) for col in np.array(zeros_list).T])
+        plot_dict["p75"].append([np.percentile(col, 75) for col in np.array(zeros_list).T])
+        plot_dict["median"].append([statistics.median(col) for col in np.array(zeros_list).T])
 
-# axs[0].plot(np.arange(-9,10,1), means[0], color="k")
-axs[0].plot(np.arange(-9,10,1), mins[0], color="g")
-axs[0].plot(np.arange(-9,10,1), maxs[0], color="r")
-# axs[1].plot(np.arange(-9,10,1), means[1], color="k")
-axs[1].plot(np.arange(-9,10,1), mins[1], color="g")
-axs[1].plot(np.arange(-9,10,1), maxs[1], color="r")
-# axs[2].plot(np.arange(-9,10,1), means[2], color="k")
-axs[2].plot(np.arange(-9,10,1), mins[2], color="g")
-axs[2].plot(np.arange(-9,10,1), maxs[2], color="r")
-            
-for i in range(3):
-    axs[i].set_xticks(np.arange(-10,10,2))
-    axs[i].set_xticklabels(np.arange(-100,100,20))
-    axs[i].set_xlim([-10,10])
-    axs[i].set_ylim([0,20])
-axs[0].set_ylabel("Niederschlag [mm/h]")
-axs[1].set_xlabel("Minuten vor und nach der max. Intensität")
+    cols = ["b", "g", "r"]
+    labels = ["Tiefland", "Hügelland", "Gebirge"]
+    x = np.arange(-20, 20, 1)
+    for i in range(3):
+        axs[0].fill_between(x, plot_dict["p75"][i], plot_dict["p25"][i], color=cols[i], alpha=0.2)
+        axs[0].plot(x, plot_dict["median"][i], color=cols[i], label=labels[i], lw=0.5)
+        axs[1].fill_between(x, normalize_list_against_maximum(plot_dict["p75"][i]), normalize_list_against_maximum(plot_dict["p25"][i]), color=cols[i], alpha=0.2)
+        axs[1].plot(x, normalize_list_against_maximum(plot_dict["median"][i]), color=cols[i], label=labels[i], lw=0.5)
+        
+    for i in range(2):
+        axs[i].set_xticks(np.arange(-10, 10, 2))
+        axs[i].set_xticklabels(np.arange(-100, 100, 20))
+        axs[i].set_xlim([-9, 10])
+    
+    axs[0].set_title(my_config)
+    axs[0].set_ylim([0, 10])
+    axs[1].set_ylim([0, 1])
+    axs[0].set_ylabel("Niederschlag [mm/h]")
+    axs[1].set_ylabel("normierter Niederschlag [-]")
+    axs[0].set_xlabel("Zeit im Abstand der max. Intensität [min]")
+    axs[1].set_xlabel("Zeit im Abstand der max. Intensität [min]")
+    axs[0].legend()
 
-plt.savefig(f"images/plots/temporal_{my_config}_DRY{min_dry_period}_MIN{min_mean_int}.png", dpi=300, bbox_inches="tight")
+    plt.savefig(
+        f"images/plots/temporal_{my_config}_DRY{min_dry_period}_MIN1.png", dpi=300, bbox_inches="tight")
+
+# plot_temporal(my_config = "SCHWARZWALD", min_dry_period=36, min_event_length=3)

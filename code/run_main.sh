@@ -13,6 +13,6 @@ set -e
 # 6) first_timesteps = number of durations to plot (10 min, 20 min, 30 min, 1 h, 2 h, 3 h, 6 h)
 
 
-python code/main.py HARZ 36 75 3 10 5 &
-python code/main.py ERZGEBIRGE 36 75 3 10 5 &
-python code/main.py SCHWARZWALD 36 75 3 10 5 &
+python code/main.py HARZ 30 60 3 10 5 &
+python code/main.py ERZGEBIRGE 30 60 3 10 5 &
+python code/main.py SCHWARZWALD 30 60 3 10 5 &

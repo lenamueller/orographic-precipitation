@@ -5,6 +5,7 @@ from S1_get_intensities import get_intensities
 from S2_get_parameters import get_parameters
 from S3_plot_scale_shape import plot_scale_shape
 from S4_plot_scale_shape_height import plot_scale_shape_height
+from S5_plot_temporal import plot_temporal
 
 
 class CONFIG(Enum):
@@ -40,3 +41,4 @@ else:
     get_parameters(my_config, min_percentile, min_dry_period, min_intensity_values)
     plot_scale_shape(my_config, min_dry_period, min_percentile, first_timesteps)
     plot_scale_shape_height(my_config, min_dry_period, min_percentile)
+    plot_temporal(my_config , min_dry_period, min_event_length)
