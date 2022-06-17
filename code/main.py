@@ -37,8 +37,9 @@ if my_config not in CONFIG.__members__:
     print("Area not found")
 else:
     print(my_config, min_dry_period, min_percentile, min_event_length, min_intensity_values, first_timesteps)
-    get_intensities(my_config, min_dry_period, min_event_length)
-    get_parameters(my_config, min_percentile, min_dry_period, min_intensity_values)
-    plot_scale_shape(my_config, min_dry_period, min_percentile, first_timesteps)
+    # get_intensities(my_config, min_dry_period, min_event_length)
+    # get_parameters(my_config, min_percentile, min_dry_period, min_intensity_values)
+    # plot_scale_shape(my_config, min_dry_period, min_percentile, first_timesteps)
+    # plot_temporal(my_config , min_dry_period, min_event_length)
     plot_scale_shape_height(my_config, min_dry_period, min_percentile)
-    plot_temporal(my_config , min_dry_period, min_event_length)
+    

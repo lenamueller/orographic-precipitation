@@ -53,16 +53,16 @@ The methodical steps are primarily inherited and adapted from [Marra et al. 2020
 
 ## Results
 #### Ore mountains
-<img src="images/plots/Scatter_ERZGEBIRGE_DRY36_PER70.png" alt="images/plots/Scatter_ERZGEBIRGE_DRY36_PER70" width="400"/>   
-<img src="images/plots/Scatter2_ERZGEBIRGE_DRY36_PER70.png" alt="images/plots/Scatter2_ERZGEBIRGE_DRY36_PER70" width="400"/>    
-<img src="images/plots/temporal_ERZGEBIRGE_DRY36_MIN1.png" alt="images/plots/temporal_ERZGEBIRGE_DRY36_MIN1" width="400"/>    
+<img src="images/plots/Scatter_ERZGEBIRGE_DRY36_PER70.png" alt="images/plots/Scatter_ERZGEBIRGE_DRY36_PER70" width="500"/>   
+<img src="images/plots/Scatter2_ERZGEBIRGE_DRY36_PER70.png" alt="images/plots/Scatter2_ERZGEBIRGE_DRY36_PER70" width="500"/>    
+<img src="images/plots/temporal_ERZGEBIRGE_DRY36_MIN1.png" alt="images/plots/temporal_ERZGEBIRGE_DRY36_MIN1" width="200"/>    
 
 #### Harz mountains
-<img src="images/plots/Scatter_HARZ_DRY36_PER70.png" alt="images/plots/Scatter_HARZ_DRY36_PER70" width="400"/>   
-<img src="images/plots/Scatter2_HARZ_DRY36_PER70.png" alt="images/plots/Scatter2_HARZ_DRY36_PER70" width="400"/>    
-<img src="images/plots/temporal_HARZ_DRY36_MIN1.png" alt="images/plots/temporal_HARZ_DRY36_MIN1" width="400"/>    
+<img src="images/plots/Scatter_HARZ_DRY36_PER70.png" alt="images/plots/Scatter_HARZ_DRY36_PER70" width="500"/>   
+<img src="images/plots/Scatter2_HARZ_DRY36_PER70.png" alt="images/plots/Scatter2_HARZ_DRY36_PER70" width="500"/>    
+<img src="images/plots/temporal_HARZ_DRY36_MIN1.png" alt="images/plots/temporal_HARZ_DRY36_MIN1" width="200"/>    
 
 #### Black forest
-<img src="images/plots/Scatter_SCHWARZWALD_DRY36_PER70.png" alt="images/plots/Scatter_SCHWARZWALD_DRY36_PER70" width="400"/>   
-<img src="images/plots/Scatter2_SCHWARZWALD_DRY36_PER70.png" alt="images/plots/Scatter2_SCHWARZWALD_DRY36_PER70" width="400"/>    
-<img src="images/plots/temporal_SCHWARZWALD_DRY36_MIN1.png" alt="images/plots/temporal_SCHWARZWALD_DRY36_MIN1" width="400"/>    
+<img src="images/plots/Scatter_SCHWARZWALD_DRY36_PER70.png" alt="images/plots/Scatter_SCHWARZWALD_DRY36_PER70" width="500"/>   
+<img src="images/plots/Scatter2_SCHWARZWALD_DRY36_PER70.png" alt="images/plots/Scatter2_SCHWARZWALD_DRY36_PER70" width="500"/>    
+<img src="images/plots/temporal_SCHWARZWALD_DRY36_MIN1.png" alt="images/plots/temporal_SCHWARZWALD_DRY36_MIN1" width="200"/>    

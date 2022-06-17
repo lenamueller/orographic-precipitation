@@ -14,5 +14,5 @@ set -e
 
 
 python code/main.py ERZGEBIRGE 36 70 3 15 5 & 
-python code/main.py HARZ 36 70 3 15 5 & 
-python code/main.py SCHWARZWALD 36 70 3 15 5 & 
+# python code/main.py HARZ 36 70 3 15 5 & 
+# python code/main.py SCHWARZWALD 36 70 3 15 5 & 
