@@ -4,6 +4,8 @@
 
 This python script analyzes orographic effects on extreme precipitation events for 3 different low mountain ranges in Germany.
 
+Made as part of the lecture "Fachvorträge Hydrologie" at TU Dresden.
+
 ## Overview
 #### Study Regions: Black Forest, Harz mountains, Ore mountains
 <img src="geodata/Map_Ueberischt_all.png" alt="geodata/Map_Ueberischt_all" width="900"/>    
@@ -50,6 +52,17 @@ The methodical steps are primarily inherited and adapted from [Marra et al. 2020
 3. fit Weibull distribution to 75% percentile
 
 ## Results
-<img src="images/plots/Scatter_ERZGEBIRGE_DRY36_PER70.png" alt="images/plots/Scatter_ERZGEBIRGE_DRY36_PER70" width="400"/>    
-<img src="images/plots/Scatter_HARZ_DRY36_PER70.png" alt="images/plots/Scatter_HARZ_DRY36_PER70" width="400"/>    
-<img src="images/plots/Scatter_SCHWARZWALD_DRY36_PER70.png" alt="images/plots/Scatter_SCHWARZWALD_DRY36_PER70" width="400"/>    
+#### Ore mountains
+<img src="images/plots/Scatter_ERZGEBIRGE_DRY36_PER70.png" alt="images/plots/Scatter_ERZGEBIRGE_DRY36_PER70" width="400"/>   
+<img src="images/plots/Scatter2_ERZGEBIRGE_DRY36_PER70.png" alt="images/plots/Scatter2_ERZGEBIRGE_DRY36_PER70" width="400"/>    
+<img src="images/plots/temporal_ERZGEBIRGE_DRY36_MIN1.png" alt="images/plots/temporal_ERZGEBIRGE_DRY36_MIN1" width="400"/>    
+
+#### Harz mountains
+<img src="images/plots/Scatter_HARZ_DRY36_PER70.png" alt="images/plots/Scatter_HARZ_DRY36_PER70" width="400"/>   
+<img src="images/plots/Scatter2_HARZ_DRY36_PER70.png" alt="images/plots/Scatter2_HARZ_DRY36_PER70" width="400"/>    
+<img src="images/plots/temporal_HARZ_DRY36_MIN1.png" alt="images/plots/temporal_HARZ_DRY36_MIN1" width="400"/>    
+
+#### Black forest
+<img src="images/plots/Scatter_SCHWARZWALD_DRY36_PER70.png" alt="images/plots/Scatter_SCHWARZWALD_DRY36_PER70" width="400"/>   
+<img src="images/plots/Scatter2_SCHWARZWALD_DRY36_PER70.png" alt="images/plots/Scatter2_SCHWARZWALD_DRY36_PER70" width="400"/>    
+<img src="images/plots/temporal_SCHWARZWALD_DRY36_MIN1.png" alt="images/plots/temporal_SCHWARZWALD_DRY36_MIN1" width="400"/>    
