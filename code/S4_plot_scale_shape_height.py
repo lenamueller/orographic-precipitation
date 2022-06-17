@@ -55,9 +55,12 @@ def plot_scale_shape_height(my_config, min_dry_period, min_percentile):
                 par = params_dict[station_i]
                 par_10 = par[0]
                 par_20 = par[1]
-                par_30 = par[2]
-                par_60 = par[3]
-                par_120 = par[4]
+                if len(par)>2:
+                    par_30 = par[2]
+                if len(par)>3:
+                    par_60 = par[3]
+                if len(par)>4:
+                    par_120 = par[4]
                 
                 if par_10 != ():
                     ax[0,0].plot(h, par[0][0], marker=markers[z], c=colors[z], markersize=markersizes[z])
@@ -71,7 +74,7 @@ def plot_scale_shape_height(my_config, min_dry_period, min_percentile):
                     shape_list[1].append(par_20[1])
                     scale_height_list[1].append(h)
                     shape_height_list[1].append(h)
-                if par_30 != ():       
+                if len(par)>2 and par_30 != ():       
                     ax[0,1].plot(h, par[2][0], marker=markers[z], c=colors[z], markersize=markersizes[z])
                     ax[1,1].plot(h, par[2][1], marker=markers[z], c=colors[z], markersize=markersizes[z])
                     scale_list[2].append(par_30[0])
