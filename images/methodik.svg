@@ -24,11 +24,11 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.1224748"
-     inkscape:cx="1171.0731"
-     inkscape:cy="491.32506"
+     inkscape:zoom="2.2449496"
+     inkscape:cx="734.76037"
+     inkscape:cy="513.37455"
      inkscape:window-width="1920"
-     inkscape:window-height="1019"
+     inkscape:window-height="1017"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -1063,7 +1063,7 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
        x="210.62106"
-       y="120.96585"
+       y="120.69281"
        id="text79680-4"
        inkscape:export-filename="/home/lena/Documents/Master/Sem_2/FachvorträgeHydro/orographic_precipitation/images/methodik_2.png"
        inkscape:export-xdpi="800"
@@ -1071,7 +1071,7 @@
          sodipodi:role="line"
          id="tspan100533"
          x="210.62106"
-         y="120.96585">Max. window</tspan></text>
+         y="120.69281">Max. Fenster</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
@@ -1084,7 +1084,7 @@
          sodipodi:role="line"
          id="tspan100493"
          x="228.00629"
-         y="120.78996">intensity [mm/h]</tspan></text>
+         y="120.78996">Intensität [mm/h]</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"

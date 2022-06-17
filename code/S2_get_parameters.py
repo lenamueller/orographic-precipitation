@@ -40,7 +40,8 @@ def get_parameters(my_config, min_percentile, min_dry_period, min_intensity_valu
                     model = surv.Weibull.fit(intensities, c=censored)
                     scale, shape = model.params
                     p = (scale,shape)
-                ws_values.append(p)
+                if scale > 0.12:
+                    ws_values.append(p)
             params[station_i] = ws_values
 
         # save zone dictionary to files

@@ -32,8 +32,10 @@ def plot_scale_shape_height(my_config, min_dry_period, min_percentile):
             
     ax[0,0].set_ylabel("scale $\lambda$")          
     ax[1,0].set_ylabel("shape $\kappa$")
-    ax[0,3].set_ylabel("Sen's slope [x10⁻³]")          
-    ax[1,3].set_ylabel("Sen's slope [x10⁻³]")
+    ax[0,3].set_ylabel("Sen's slope [x10-3]")          
+    ax[1,3].set_ylabel("Sen's slope [x10-4]")
+    # ax[0,3].set_ylabel("Sen's slope")          
+    # ax[1,3].set_ylabel("Sen's slope")
     ax[1,3].set_xlabel("duration [min]")
 
     # --------------- plot 6 left plots ---------------
@@ -107,15 +109,19 @@ def plot_scale_shape_height(my_config, min_dry_period, min_percentile):
                 ax[0,2].plot(x, sen_coeff[0]*x+sen_coeff[1], linestyle="--", linewidth=1.5, color="k")
 
     slopes = [x*1000 for x in slopes]
-    print(slopes)
-    ax[0,3].plot(np.arange(5), slopes, marker=".", markersize=12, c="grey")
+    print("scale slopes", slopes)
+    if len(slopes) == 4:
+        ax[0,3].plot(np.arange(4), slopes, marker=".", markersize=12, c="grey")
+    else:
+        ax[0,3].plot(np.arange(5), slopes, marker=".", markersize=12, c="grey")
     
     # shape
     slopes:list[float] = []
     intercepts:list[float] = []
     for i in range(5):
+        print(i, len(shape_list[i]))
         if shape_list[i] != [] and shape_height_list[i] != []:    
-            sen_coeff = stats.theilslopes(shape_list[0], shape_height_list[0])
+            sen_coeff = stats.theilslopes(shape_list[i], shape_height_list[i])
             slopes.append(sen_coeff[0])
             intercepts.append(sen_coeff[1])
             if i == 0:
@@ -124,10 +130,12 @@ def plot_scale_shape_height(my_config, min_dry_period, min_percentile):
                 ax[1,1].plot(x, sen_coeff[0]*x+sen_coeff[1], linestyle="--", linewidth=1.5, color="k")
             if i == 3:
                 ax[1,2].plot(x, sen_coeff[0]*x+sen_coeff[1], linestyle="--", linewidth=1.5, color="k")
-    # slopes = [x*1000 for x in slopes]
-    print(slopes)
-    ax[1,3].plot(np.arange(5), slopes, marker=".", markersize=12, c="grey")
-
+    slopes = [x*10000 for x in slopes]
+    print("shape slopes", slopes)
+    if len(slopes) == 4:
+        ax[1,3].plot(np.arange(4), slopes, marker=".", markersize=12, c="grey")
+    else:
+        ax[1,3].plot(np.arange(5), slopes, marker=".", markersize=12, c="grey")
     for i in range(2):
         ax[i,3].set_xticks(np.arange(5),["10", "20", "30", "60", "120"])
 
@@ -138,5 +146,5 @@ def plot_scale_shape_height(my_config, min_dry_period, min_percentile):
     ax[0,0].legend(loc=0)
 
     
-    plt.savefig(f"images/Scatter/Scatter2_{my_config}_DRY{min_dry_period}_PER{min_percentile}.png", dpi=600, bbox_inches="tight")
+    plt.savefig(f"images/plots/Scatter2_{my_config}_DRY{min_dry_period}_PER{min_percentile}.png", dpi=600, bbox_inches="tight")
     print("S4_plot_scale_shape_height.py done")

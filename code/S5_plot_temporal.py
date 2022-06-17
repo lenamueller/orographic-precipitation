@@ -45,7 +45,7 @@ def plot_temporal(my_config, min_dry_period, min_event_length):
     z_all = [z1_all, z2_all, z3_all]
 
     # plot events
-    fig, axs = plt.subplots(nrows=2, ncols=1, figsize=(4, 8))
+    fig, axs = plt.subplots(nrows=2, ncols=1, figsize=(5, 8))
     plot_dict: dict = {"mins": [], "maxs": [],
                     "mean": [], "p25": [], "p75": [], "median": []}
     for i in range(3):
@@ -81,9 +81,9 @@ def plot_temporal(my_config, min_dry_period, min_event_length):
     x = np.arange(-20, 20, 1)
     for i in range(3):
         axs[0].fill_between(x, plot_dict["p75"][i], plot_dict["p25"][i], color=cols[i], alpha=0.2)
-        axs[0].plot(x, plot_dict["median"][i], color=cols[i], label=labels[i], lw=0.5)
+        axs[0].plot(x, plot_dict["median"][i], color=cols[i], label=labels[i], lw=0.8)
         axs[1].fill_between(x, normalize_list_against_maximum(plot_dict["p75"][i]), normalize_list_against_maximum(plot_dict["p25"][i]), color=cols[i], alpha=0.2)
-        axs[1].plot(x, normalize_list_against_maximum(plot_dict["median"][i]), color=cols[i], label=labels[i], lw=0.5)
+        axs[1].plot(x, normalize_list_against_maximum(plot_dict["median"][i]), color=cols[i], label=labels[i], lw=0.8)
         
     for i in range(2):
         axs[i].set_xticks(np.arange(-10, 10, 2))
@@ -102,4 +102,4 @@ def plot_temporal(my_config, min_dry_period, min_event_length):
     plt.savefig(
         f"images/plots/temporal_{my_config}_DRY{min_dry_period}_MIN1.png", dpi=300, bbox_inches="tight")
 
-# plot_temporal(my_config = "SCHWARZWALD", min_dry_period=36, min_event_length=3)
+print("S5_plot_temporal.py done")

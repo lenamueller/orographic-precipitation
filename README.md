@@ -50,4 +50,6 @@ The methodical steps are primarily inherited and adapted from [Marra et al. 2020
 3. fit Weibull distribution to 75% percentile
 
 ## Results
-TODO
+<img src="images/plots/Scatter_ERZGEBIRGE_DRY36_PER70.png" alt="images/plots/Scatter_ERZGEBIRGE_DRY36_PER70" width="400"/>    
+<img src="images/plots/Scatter_HARZ_DRY36_PER70.png" alt="images/plots/Scatter_HARZ_DRY36_PER70" width="400"/>    
+<img src="images/plots/Scatter_SCHWARZWALD_DRY36_PER70.png" alt="images/plots/Scatter_SCHWARZWALD_DRY36_PER70" width="400"/>    

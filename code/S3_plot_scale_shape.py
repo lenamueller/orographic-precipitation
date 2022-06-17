@@ -33,17 +33,17 @@ def plot_scale_shape(my_config, min_dry_period, min_percentile, first_timesteps)
             if nb_windowsizes > 1:
                 for duration in range(nb_windowsizes):
                     if tuples_i[duration] not in [(False,False), ()]:
-                        axs[z].scatter(tuples_i[duration][0], tuples_i[duration][1], marker=".", s=8, c=colors[duration], zorder=3)
+                        axs[z].scatter(tuples_i[duration][0], tuples_i[duration][1], marker=".", s=20, c=colors[duration], zorder=3)
                         x_lineplot.append(tuples_i[duration][0])
                         y_lineplot.append(tuples_i[duration][1])
 
             # plot lines between scatter
-            axs[z].plot(x_lineplot, y_lineplot, linewidth=0.5, alpha=0.5, color="gray", zorder=1)
+            axs[z].plot(x_lineplot, y_lineplot, linewidth=0.8, alpha=0.5, color="gray", zorder=1)
 
         axs[z].set_title(titles[z])
         axs[z].set_xscale('log', base=2)
-        axs[z].set_ylim([0,1.4])
-        axs[z].set_xlim([0,18])
+        axs[z].set_ylim([0,1.0])
+        axs[z].set_xlim([0.12,8])
        
 
     axs[0].set_xlabel("scale $\lambda$")
@@ -53,6 +53,6 @@ def plot_scale_shape(my_config, min_dry_period, min_percentile, first_timesteps)
         axs[2].scatter(-1,-1,c=colors[i],label=labels[i])
     plt.legend()
 
-    plt.savefig(f"images/Scatter/Scatter_{my_config}_DRY{min_dry_period}_PER{min_percentile}.png", dpi=600, bbox_inches="tight")
+    plt.savefig(f"images/plots/Scatter_{my_config}_DRY{min_dry_period}_PER{min_percentile}.png", dpi=600, bbox_inches="tight")
 
     print("S3_plot_scale_shape.py done")
